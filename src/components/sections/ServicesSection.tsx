@@ -1,5 +1,7 @@
 import { Truck, Package, MapPin, Users } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import { cn } from "@/lib/utils";
 
 const services = [
   {
@@ -33,11 +35,22 @@ const services = [
 ];
 
 export function ServicesSection() {
+  const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation();
+  const { ref: cardsRef, isVisible: cardsVisible } = useScrollAnimation({ threshold: 0.05 });
+
   return (
     <section className="section-padding bg-muted/50">
       <div className="container-tight">
         {/* Header */}
-        <div className="text-center mb-12 md:mb-16">
+        <div 
+          ref={headerRef}
+          className={cn(
+            "text-center mb-12 md:mb-16 transition-all duration-700",
+            headerVisible 
+              ? "opacity-100 translate-y-0" 
+              : "opacity-0 translate-y-8"
+          )}
+        >
           <span className="text-sm font-semibold text-primary uppercase tracking-wider">
             Soluções
           </span>
@@ -51,11 +64,17 @@ export function ServicesSection() {
         </div>
 
         {/* Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {services.map((service) => (
+        <div ref={cardsRef} className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {services.map((service, index) => (
             <Card 
               key={service.title} 
-              className="group bg-card border-border shadow-card hover:shadow-card-hover transition-all duration-300"
+              className={cn(
+                "group bg-card border-border shadow-card hover:shadow-card-hover transition-all duration-500",
+                cardsVisible 
+                  ? "opacity-100 translate-y-0" 
+                  : "opacity-0 translate-y-12"
+              )}
+              style={{ transitionDelay: cardsVisible ? `${index * 100}ms` : "0ms" }}
             >
               <CardContent className="p-6 md:p-8">
                 <div className="flex items-start gap-4">
