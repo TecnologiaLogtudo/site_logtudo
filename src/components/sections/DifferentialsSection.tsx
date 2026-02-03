@@ -6,6 +6,8 @@ import {
   MapPinned, 
   TrendingUp 
 } from "lucide-react";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import { cn } from "@/lib/utils";
 
 const differentials = [
   {
@@ -41,11 +43,22 @@ const differentials = [
 ];
 
 export function DifferentialsSection() {
+  const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation();
+  const { ref: gridRef, isVisible: gridVisible } = useScrollAnimation({ threshold: 0.05 });
+
   return (
     <section className="section-padding bg-background">
       <div className="container-tight">
         {/* Header */}
-        <div className="text-center mb-12 md:mb-16">
+        <div 
+          ref={headerRef}
+          className={cn(
+            "text-center mb-12 md:mb-16 transition-all duration-700",
+            headerVisible 
+              ? "opacity-100 translate-y-0" 
+              : "opacity-0 translate-y-8"
+          )}
+        >
           <span className="text-sm font-semibold text-primary uppercase tracking-wider">
             Diferenciais
           </span>
@@ -59,11 +72,17 @@ export function DifferentialsSection() {
         </div>
 
         {/* Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div ref={gridRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {differentials.map((item, index) => (
             <div
               key={item.title}
-              className="group relative"
+              className={cn(
+                "group relative transition-all duration-500",
+                gridVisible 
+                  ? "opacity-100 translate-y-0" 
+                  : "opacity-0 translate-y-12"
+              )}
+              style={{ transitionDelay: gridVisible ? `${index * 80}ms` : "0ms" }}
             >
               <div className="flex flex-col items-start">
                 <div className="mb-4 w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary transition-colors duration-300">

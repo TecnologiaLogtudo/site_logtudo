@@ -1,4 +1,6 @@
 import { Search, FileText, Cog, Radio, LineChart } from "lucide-react";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import { cn } from "@/lib/utils";
 
 const steps = [
   {
@@ -34,11 +36,22 @@ const steps = [
 ];
 
 export function HowItWorksSection() {
+  const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation();
+  const { ref: stepsRef, isVisible: stepsVisible } = useScrollAnimation({ threshold: 0.05 });
+
   return (
     <section className="section-padding hero-gradient">
       <div className="container-tight">
         {/* Header */}
-        <div className="text-center mb-12 md:mb-16">
+        <div 
+          ref={headerRef}
+          className={cn(
+            "text-center mb-12 md:mb-16 transition-all duration-700",
+            headerVisible 
+              ? "opacity-100 translate-y-0" 
+              : "opacity-0 translate-y-8"
+          )}
+        >
           <span className="text-sm font-semibold text-primary-foreground/70 uppercase tracking-wider">
             Como Funciona
           </span>
@@ -52,15 +65,29 @@ export function HowItWorksSection() {
         </div>
 
         {/* Steps */}
-        <div className="relative">
+        <div ref={stepsRef} className="relative">
           {/* Connection line */}
-          <div className="hidden lg:block absolute top-16 left-[10%] right-[10%] h-0.5 bg-primary-foreground/20" />
+          <div 
+            className={cn(
+              "hidden lg:block absolute top-16 left-[10%] right-[10%] h-0.5 bg-primary-foreground/20 transition-all duration-1000 origin-left",
+              stepsVisible ? "scale-x-100" : "scale-x-0"
+            )}
+          />
           
           <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-8">
             {steps.map((item, index) => (
-              <div key={item.title} className="relative text-center">
+              <div 
+                key={item.title} 
+                className={cn(
+                  "relative text-center transition-all duration-500",
+                  stepsVisible 
+                    ? "opacity-100 translate-y-0" 
+                    : "opacity-0 translate-y-12"
+                )}
+                style={{ transitionDelay: stepsVisible ? `${index * 150}ms` : "0ms" }}
+              >
                 {/* Icon circle */}
-                <div className="relative z-10 mx-auto mb-4 w-20 h-20 rounded-full bg-primary-foreground/10 border-2 border-primary-foreground/30 flex items-center justify-center">
+                <div className="relative z-10 mx-auto mb-4 w-20 h-20 rounded-full bg-primary-foreground/10 border-2 border-primary-foreground/30 flex items-center justify-center hover:scale-110 transition-transform duration-300">
                   <item.icon className="h-8 w-8 text-primary-foreground" />
                 </div>
                 
