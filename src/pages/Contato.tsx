@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { WhatsAppFloat } from "@/components/WhatsAppFloat";
+import { LocationSection } from "@/components/sections/LocationSection";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -246,6 +247,8 @@ export default function Contato() {
             </div>
           </div>
         </section>
+
+        <LocationSection />
       </main>
       <Footer />
       <WhatsAppFloat />
