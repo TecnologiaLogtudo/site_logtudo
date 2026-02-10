@@ -40,7 +40,7 @@ export function HowItWorksSection() {
   const { ref: stepsRef, isVisible: stepsVisible } = useScrollAnimation({ threshold: 0.05 });
 
   return (
-    <section className="section-padding hero-gradient">
+    <section id="como-funciona" className="section-padding hero-gradient">
       <div className="container-tight">
         {/* Header */}
         <div 

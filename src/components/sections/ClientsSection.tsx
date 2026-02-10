@@ -3,6 +3,13 @@ import { Card, CardContent } from "@/components/ui/card";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { cn } from "@/lib/utils";
 
+// 1. Importe suas logos aqui (ajuste o nome do arquivo conforme salvou em assets)
+import logoCliente1 from "@/assets/logo-amazon.webp";
+import logoCliente2 from "@/assets/logo-Latam.png";
+import logoCliente3 from "@/assets/Logo-lactalis.webp";
+import logoCliente4 from "@/assets/logo-itambe.png";
+import logoCliente5 from "@/assets/3-coracoes.png";
+
 const stats = [
   { value: "+150", label: "Clientes Ativos" },
   { value: "12+", label: "Anos de Mercado" },
@@ -26,12 +33,12 @@ const testimonials = [
 ];
 
 const clientLogos = [
-  "E-Commerce A",
-  "Indústria B",
-  "Varejo C",
-  "Marketplace D",
-  "Distribuidora E",
-  "Farmacêutica F",
+  // 2. Substitua 'null' pela variável da logo importada (ex: logo: logoCliente1)
+  { name: "E-Commerce A", logo: logoCliente1 },
+  { name: "Indústria B", logo: logoCliente2 },
+  { name: "Varejo C", logo: logoCliente3 },
+  { name: "Marketplace D", logo: logoCliente4 },
+  { name: "Distribuidora E", logo: logoCliente5 }
 ];
 
 export function ClientsSection() {
@@ -131,19 +138,27 @@ export function ClientsSection() {
           <p className="text-center text-sm text-muted-foreground mb-8">
             Empresas que confiam em nossa operação
           </p>
-          <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12">
-            {clientLogos.map((logo, index) => (
+          <div className="grid grid-cols-2 gap-4 md:flex md:flex-nowrap md:justify-center md:gap-8 items-center">
+            {clientLogos.map((client, index) => (
               <div
-                key={logo}
+                key={client.name}
                 className={cn(
-                  "h-10 px-6 flex items-center justify-center bg-muted rounded-lg transition-all duration-500 hover:bg-primary/10 hover:scale-105",
+                  "h-40 px-4 flex items-center justify-center rounded-lg transition-all duration-500 hover:scale-105",
                   logosVisible 
                     ? "opacity-100 translate-y-0" 
                     : "opacity-0 translate-y-4"
                 )}
                 style={{ transitionDelay: logosVisible ? `${index * 50}ms` : "0ms" }}
               >
-                <span className="text-sm font-medium text-muted-foreground">{logo}</span>
+                {client.logo ? (
+                  <img 
+                    src={client.logo} 
+                    alt={client.name} 
+                    className="h-full w-auto object-contain" 
+                  />
+                ) : (
+                  <span className="text-sm font-medium text-muted-foreground">{client.name}</span>
+                )}
               </div>
             ))}
           </div>

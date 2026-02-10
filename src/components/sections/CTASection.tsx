@@ -43,7 +43,7 @@ export function CTASection() {
             </Button>
             <Button variant="heroOutline" size="xl" className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10" asChild>
               <a 
-                href="https://wa.me/5511999999999?text=Olá, gostaria de uma cotação para minha operação logística" 
+                href="https://wa.me/5571984288956?text=Olá, gostaria de uma cotação para minha operação logística" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="flex items-center gap-2"

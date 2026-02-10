@@ -21,23 +21,17 @@ export function HeroSection() {
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary-foreground/10 border border-primary-foreground/20 backdrop-blur-sm mb-6 animate-fade-in" style={{ animationDelay: '0.1s' }}>
             <span className="w-2 h-2 rounded-full bg-[hsl(142,70%,50%)] animate-pulse" />
             <span className="text-sm font-medium text-primary-foreground/90">
-              Operações em todo o Brasil
+              Operações em todo o Nordeste
             </span>
           </div>
           
           {/* Headline */}
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary-foreground leading-tight tracking-tight mb-6 animate-fade-in" style={{ animationDelay: '0.2s' }}>
-            Logística que entrega{" "}
-            <span className="text-[hsl(197,70%,70%)]">resultado</span>,
+            Mais do que transportar,{" "}
+            <span className="text-[hsl(197,70%,70%)]">conectamos</span>{" "}
             <br className="hidden md:block" />
-            não só mercadoria
+            <span className="md:whitespace-nowrap">negócios com inteligência</span>
           </h1>
-          
-          {/* Subheadline */}
-          <p className="text-lg md:text-xl text-primary-foreground/80 leading-relaxed mb-8 max-w-2xl animate-fade-in" style={{ animationDelay: '0.3s' }}>
-            Soluções de distribuição middle mile e last mile para operações B2B de alto volume. 
-            Tecnologia, SLA contratual e a escala que sua operação precisa.
-          </p>
           
           {/* Stats */}
           <div className="flex flex-wrap gap-8 mb-10">
@@ -51,10 +45,10 @@ export function HeroSection() {
                 className="text-center md:text-left animate-fade-in"
                 style={{ animationDelay: stat.delay }}
               >
-                <p className="text-3xl md:text-4xl font-bold text-primary-foreground">
+                <p className="text-2xl md:text-4xl font-bold text-primary-foreground">
                   {stat.value}
                 </p>
-                <p className="text-sm text-primary-foreground/70">{stat.label}</p>
+                <p className="text-xs md:text-sm text-primary-foreground/70">{stat.label}</p>
               </div>
             ))}
           </div>
@@ -66,12 +60,6 @@ export function HeroSection() {
                 Solicitar Cotação
                 <ArrowRight className="h-5 w-5" />
               </Link>
-            </Button>
-            <Button variant="heroOutline" size="xl" asChild>
-              <a href="tel:+5511999999999" className="flex items-center gap-2">
-                <Phone className="h-5 w-5" />
-                Falar com Especialista
-              </a>
             </Button>
           </div>
         </div>

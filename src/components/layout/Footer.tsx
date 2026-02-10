@@ -3,17 +3,11 @@ import { MapPin, Phone, Mail, Linkedin, Instagram } from "lucide-react";
 import logoLogtudo from "@/assets/logo_logtudo.png";
 
 const footerLinks = {
-  solucoes: [
-    { name: "Middle Mile", href: "/solucoes#middle-mile" },
-    { name: "Last Mile", href: "/solucoes#last-mile" },
-    { name: "Distribuição Urbana", href: "/solucoes#distribuicao" },
-    { name: "Operações Dedicadas", href: "/solucoes#dedicadas" },
-  ],
   empresa: [
-    { name: "Sobre Nós", href: "/sobre" },
-    { name: "Diferenciais", href: "/diferenciais" },
-    { name: "Tecnologia", href: "/tecnologia" },
-    { name: "Cases", href: "/cases" },
+    { name: "Sobre Nós", href: "/sobre#" },
+    { name: "Soluções", href: "/#solucoes" },
+    { name: "Diferenciais", href: "/#diferenciais" },
+    { name: "Localização", href: "/#localizacao" },
   ],
   contato: [
     { name: "Solicitar Cotação", href: "/contato" },
@@ -26,7 +20,7 @@ export function Footer() {
   return (
     <footer className="bg-foreground text-background">
       <div className="container-tight section-padding">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
           {/* Brand */}
           <div className="lg:col-span-2">
             <img
@@ -41,38 +35,21 @@ export function Footer() {
             <div className="space-y-3 text-sm text-background/70">
               <div className="flex items-start gap-3">
                 <MapPin className="h-4 w-4 mt-1 flex-shrink-0" />
-                <span>São Paulo, SP - Brasil</span>
+                <span>Simões Filho, BA - Brasil</span>
               </div>
               <div className="flex items-center gap-3">
                 <Phone className="h-4 w-4 flex-shrink-0" />
-                <a href="tel:+5511999999999" className="hover:text-background transition-colors">
-                  (11) 99999-9999
+                <a href="tel:+5571984288956" className="hover:text-background transition-colors">
+                  (71) 98428-8956
                 </a>
               </div>
               <div className="flex items-center gap-3">
                 <Mail className="h-4 w-4 flex-shrink-0" />
                 <a href="mailto:comercial@logtudo.com.br" className="hover:text-background transition-colors">
-                  comercial@logtudo.com.br
+                  sucessoaocliente@logtudo.com.br
                 </a>
               </div>
             </div>
-          </div>
-
-          {/* Soluções */}
-          <div>
-            <h4 className="font-semibold text-sm mb-4 text-background">Soluções</h4>
-            <ul className="space-y-2">
-              {footerLinks.solucoes.map((link) => (
-                <li key={link.name}>
-                  <Link
-                    to={link.href}
-                    className="text-sm text-background/70 hover:text-background transition-colors"
-                  >
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
           </div>
 
           {/* Empresa */}
@@ -110,7 +87,7 @@ export function Footer() {
             {/* Social */}
             <div className="flex gap-4 mt-6">
               <a
-                href="https://linkedin.com"
+                href="https://linkedin.com/company/logtudo"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-background/70 hover:text-background transition-colors"
@@ -119,7 +96,7 @@ export function Footer() {
                 <Linkedin className="h-5 w-5" />
               </a>
               <a
-                href="https://instagram.com"
+                href="https://instagram.com/logtudologistica"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-background/70 hover:text-background transition-colors"
@@ -137,13 +114,23 @@ export function Footer() {
             © {new Date().getFullYear()} Logtudo. Todos os direitos reservados.
           </p>
           <div className="flex gap-6 text-xs text-background/60">
-            <Link to="/privacidade" className="hover:text-background transition-colors">
+            <Link to="/politica-de-privacidade" className="hover:text-background transition-colors">
               Política de Privacidade
             </Link>
-            <Link to="/termos" className="hover:text-background transition-colors">
+            <Link to="/termos-de-uso" className="hover:text-background transition-colors">
               Termos de Uso
             </Link>
           </div>
+        </div>
+        <div className="mt-4 text-center">
+          <a
+            href="https://lealverse.com.br"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-xs text-background/60 hover:text-background transition-colors"
+          >
+            Criado por <span className="font-bold text-background">LealVerse</span>
+          </a>
         </div>
       </div>
     </footer>

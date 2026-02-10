@@ -1,10 +1,10 @@
 import { 
   Shield, 
-  Cpu, 
-  BarChart3, 
+  Map, 
+  MonitorCog, 
   Clock, 
-  MapPinned, 
-  TrendingUp 
+  Headset, 
+  TrendingUp, 
 } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { cn } from "@/lib/utils";
@@ -16,14 +16,14 @@ const differentials = [
     description: "Compromisso formalizado com indicadores de performance. Não é promessa, é contrato.",
   },
   {
-    icon: Cpu,
-    title: "Tecnologia Integrada",
-    description: "TMS próprio com APIs para integração ERP, WMS e e-commerce. Dados em tempo real.",
+    icon: Map,
+    title: "Estudo de Malha",
+    description: "Análise detalhada para definir a melhor estrutura logística, reduzindo custos e prazos.",
   },
   {
-    icon: BarChart3,
-    title: "Gestão por Indicadores",
-    description: "OTIF, lead time, ocorrências. Dashboards e relatórios para tomada de decisão.",
+    icon: MonitorCog,
+    title: "Tratamento de Anomalias",
+    description: "Monitoramento proativo e ações corretivas para garantir a integridade das operações.",
   },
   {
     icon: Clock,
@@ -31,9 +31,9 @@ const differentials = [
     description: "Processos lean e equipe dedicada para responder rápido às demandas da sua operação.",
   },
   {
-    icon: MapPinned,
-    title: "Cobertura Nacional",
-    description: "+500 cidades atendidas com malha logística própria e parceiros homologados.",
+    icon: Headset,
+    title: "Monitoramento",
+    description: "Rastreamento em tempo real com visibilidade total da cadeia logística, do pickup à entrega.",
   },
   {
     icon: TrendingUp,
@@ -47,7 +47,7 @@ export function DifferentialsSection() {
   const { ref: gridRef, isVisible: gridVisible } = useScrollAnimation({ threshold: 0.05 });
 
   return (
-    <section className="section-padding bg-background">
+    <section id="diferenciais" className="section-padding bg-background">
       <div className="container-tight">
         {/* Header */}
         <div 

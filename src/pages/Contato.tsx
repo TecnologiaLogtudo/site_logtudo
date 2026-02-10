@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useEffect } from "react";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { WhatsAppFloat } from "@/components/WhatsAppFloat";
@@ -15,6 +16,14 @@ export default function Contato() {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+
+  useEffect(() => {
+    // Rola para o topo da página quando o componente é montado
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth" // Para rolagem suave
+    });
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -80,7 +89,7 @@ export default function Contato() {
                     
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                       <div className="space-y-2">
-                        <Label htmlFor="name">Nome Completo *</Label>
+                        <Label htmlFor="name">Nome *</Label>
                         <Input id="name" required placeholder="Seu nome" />
                       </div>
                       <div className="space-y-2">
@@ -195,8 +204,8 @@ export default function Contato() {
                       </div>
                       <div>
                         <p className="font-medium text-foreground">Telefone</p>
-                        <a href="tel:+5511999999999" className="text-muted-foreground hover:text-primary transition-colors">
-                          (11) 99999-9999
+                        <a href="tel:+5571984288956" className="text-muted-foreground hover:text-primary transition-colors">
+                          (71) 98428-8956
                         </a>
                       </div>
                     </div>
@@ -206,8 +215,8 @@ export default function Contato() {
                       </div>
                       <div>
                         <p className="font-medium text-foreground">E-mail</p>
-                        <a href="mailto:comercial@logtudo.com.br" className="text-muted-foreground hover:text-primary transition-colors">
-                          comercial@logtudo.com.br
+                        <a href="mailto:sucessoaoclientel@logtudo.com.br" className="text-muted-foreground hover:text-primary transition-colors">
+                          sucessoaocliente@logtudo.com.br
                         </a>
                       </div>
                     </div>
@@ -218,7 +227,7 @@ export default function Contato() {
                       <div>
                         <p className="font-medium text-foreground">Endereço</p>
                         <p className="text-muted-foreground">
-                          São Paulo, SP - Brasil
+                          Simões Filho, BA - Brasil
                         </p>
                       </div>
                     </div>
@@ -235,7 +244,7 @@ export default function Contato() {
                   </p>
                   <Button variant="whatsapp" className="w-full" asChild>
                     <a 
-                      href="https://wa.me/5511999999999?text=Olá, gostaria de uma cotação" 
+                      href="https://wa.me/5571984288956?text=Olá, gostaria de uma cotação" 
                       target="_blank" 
                       rel="noopener noreferrer"
                     >

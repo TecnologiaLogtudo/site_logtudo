@@ -3,10 +3,10 @@ import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { cn } from "@/lib/utils";
 
 const segments = [
-  { icon: ShoppingCart, name: "E-commerce", description: "Entregas B2C e B2B2C" },
-  { icon: Factory, name: "Indústria", description: "Distribuição nacional" },
+  { icon: ShoppingCart, name: "E-commerce", description: "Entregas B2C e D2D" },
+  { icon: Factory, name: "Indústria", description: "Distribuição nordeste" },
   { icon: Store, name: "Varejo", description: "Abastecimento de lojas" },
-  { icon: Building2, name: "Marketplaces", description: "Fulfillment e last mile" },
+  { icon: Building2, name: "Marketplaces", description: "Cumprimento e last mile" },
   { icon: Package2, name: "Distribuidoras", description: "Transferência e entrega" },
   { icon: Pill, name: "Farma & Saúde", description: "Cadeia fria e controlados" },
 ];
@@ -16,7 +16,7 @@ export function SegmentsSection() {
   const { ref: gridRef, isVisible: gridVisible } = useScrollAnimation({ threshold: 0.1 });
 
   return (
-    <section className="section-padding bg-background">
+    <section id="segmentos" className="section-padding bg-background">
       <div className="container-tight">
         {/* Header */}
         <div 

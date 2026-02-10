@@ -15,7 +15,7 @@ const services = [
     icon: Package,
     title: "Last Mile",
     description:
-      "Entrega final ao destinatário com capilaridade nacional, tecnologia de roteirização e comprovação digital.",
+      "Entrega final ao destinatário com capilaridade em todo o nordeste, tecnologia de roteirização e comprovação digital.",
     benefits: ["Prova de entrega", "Notificações ao cliente", "Tentativas múltiplas"],
   },
   {
@@ -39,7 +39,7 @@ export function ServicesSection() {
   const { ref: cardsRef, isVisible: cardsVisible } = useScrollAnimation({ threshold: 0.05 });
 
   return (
-    <section className="section-padding bg-muted/50">
+    <section id="solucoes" className="section-padding bg-muted/50">
       <div className="container-tight">
         {/* Header */}
         <div 

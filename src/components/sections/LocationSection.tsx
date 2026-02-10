@@ -43,9 +43,9 @@ export function LocationSection() {
                 <div>
                   <h3 className="font-semibold text-foreground mb-1">Endereço</h3>
                   <p className="text-muted-foreground text-sm">
-                    Av. Paulista, 1000 - Bela Vista
+                    Via Urbana, s/n - CIA Sul
                     <br />
-                    São Paulo - SP, 01310-100
+                    Simões Filho - BA, 43721-450
                   </p>
                 </div>
               </div>
@@ -58,10 +58,10 @@ export function LocationSection() {
                 <div>
                   <h3 className="font-semibold text-foreground mb-1">Telefone</h3>
                   <a
-                    href="tel:+551140028922"
+                    href="tel:+5571984288956"
                     className="text-muted-foreground text-sm hover:text-primary transition-colors"
                   >
-                    (11) 4002-8922
+                    (71) 98428-8956
                   </a>
                 </div>
               </div>
@@ -77,7 +77,7 @@ export function LocationSection() {
                     href="mailto:contato@logtudo.com.br"
                     className="text-muted-foreground text-sm hover:text-primary transition-colors"
                   >
-                    contato@logtudo.com.br
+                    sucessoaocliente@logtudo.com.br
                   </a>
                 </div>
               </div>
@@ -90,9 +90,7 @@ export function LocationSection() {
                 <div>
                   <h3 className="font-semibold text-foreground mb-1">Horário</h3>
                   <p className="text-muted-foreground text-sm">
-                    Segunda a Sexta: 08h às 18h
-                    <br />
-                    Sábado: 08h às 12h
+                    Segunda a Sexta: 08h às 17h
                   </p>
                 </div>
               </div>
@@ -107,7 +105,8 @@ export function LocationSection() {
           >
             <div className="w-full h-full min-h-[350px] md:min-h-[400px] rounded-lg overflow-hidden shadow-lg">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3657.1975870186027!2d-46.65512672378429!3d-23.56326677879849!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce59c8da0aa315%3A0xd59f9431f2c9776a!2sAv.%20Paulista%2C%201000%20-%20Bela%20Vista%2C%20S%C3%A3o%20Paulo%20-%20SP%2C%2001310-100!5e0!3m2!1spt-BR!2sbr!4v1706889600000!5m2!1spt-BR!2sbr"
+                // SUBSTITUA O LINK ABAIXO PELO LINK GERADO NO GOOGLE MAPS (Compartilhar -> Incorporar um mapa)
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3890.1467523319366!2d-38.40305822417118!3d-12.833791957055041!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x7166ca983022f57%3A0x1effdd946daece50!2zTG9ndHVkbyBTb2x1w6fDtWVzIExvZ8Otc3RpY2E!5e0!3m2!1spt-BR!2sbr!4v1770225663885!5m2!1spt-BR!2sbr"
                 width="100%"
                 height="100%"
                 style={{ border: 0, minHeight: "350px" }}
