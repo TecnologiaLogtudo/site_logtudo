@@ -49,6 +49,27 @@ export default function Admin() {
     toast({ title: "Alterações salvas!", description: `Seção ${section} atualizada com sucesso.` });
   };
 
+  // Helper para atualizar estatísticas do Hero
+  const updateHeroStat = (index: number, field: string, value: string) => {
+    const newHero = { ...heroForm };
+    const newStats = [...newHero.stats];
+    newStats[index] = { ...newStats[index], [field]: value };
+    newHero.stats = newStats;
+    setHeroForm(newHero);
+  };
+
+  const addHeroStat = () => {
+    const newHero = { ...heroForm };
+    newHero.stats.push({ value: "0", label: "Novo Dado", delay: "0.2s" });
+    setHeroForm(newHero);
+  };
+
+  const removeHeroStat = (index: number) => {
+    const newHero = { ...heroForm };
+    newHero.stats.splice(index, 1);
+    setHeroForm(newHero);
+  };
+
   // Helper para atualizar arrays aninhados (Soluções)
   const updateSolution = (index: number, field: string, value: any) => {
     const newSolutions = [...solutionsForm];
@@ -137,6 +158,18 @@ export default function Admin() {
     setClientsForm(newClients);
   };
 
+  // Helper para upload de imagem (converte para Base64)
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>, callback: (base64: string) => void) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        callback(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
@@ -192,12 +225,26 @@ export default function Admin() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label>URL da Imagem de Fundo</Label>
-                    <Input 
-                      value={heroForm.backgroundImage} 
-                      onChange={(e) => setHeroForm({...heroForm, backgroundImage: e.target.value})} 
-                    />
-                    <p className="text-xs text-muted-foreground">Use uma URL de imagem ou mantenha o padrão.</p>
+                    <Label>Imagem de Fundo (URL ou Arquivo Local)</Label>
+                    <div className="flex gap-2">
+                      <Input 
+                        value={heroForm.backgroundImage} 
+                        onChange={(e) => setHeroForm({...heroForm, backgroundImage: e.target.value})} 
+                        placeholder="https://exemplo.com/imagem.jpg"
+                      />
+                      <div className="relative">
+                        <Button variant="outline" type="button" className="cursor-pointer">
+                          Upload
+                          <input 
+                            type="file" 
+                            className="absolute inset-0 opacity-0 cursor-pointer" 
+                            accept="image/*"
+                            onChange={(e) => handleImageUpload(e, (b64) => setHeroForm({...heroForm, backgroundImage: b64}))}
+                          />
+                        </Button>
+                      </div>
+                    </div>
+                    <p className="text-xs text-muted-foreground">Cole uma URL ou selecione um arquivo do seu computador.</p>
                   </div>
                   <div className="space-y-2">
                     <Label>Opacidade da Película (0.0 a 1.0)</Label>
@@ -211,7 +258,36 @@ export default function Admin() {
                     />
                   </div>
                 </div>
-                <Button onClick={() => handleSave('hero')} className="mt-4">Salvar Alterações</Button>
+
+                <Separator className="my-6" />
+                <h3 className="font-semibold mb-4">Estatísticas do Hero</h3>
+                <div className="space-y-4">
+                  {heroForm.stats.map((stat, index) => (
+                    <div key={index} className="p-4 border rounded-lg space-y-4 bg-muted/10">
+                      <div className="flex justify-between items-center">
+                        <Label>Dado {index + 1}</Label>
+                        <Button variant="destructive" size="sm" onClick={() => removeHeroStat(index)}>
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      </div>
+                      <div className="grid grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                          <Label>Valor</Label>
+                          <Input value={stat.value} onChange={(e) => updateHeroStat(index, 'value', e.target.value)} />
+                        </div>
+                        <div className="space-y-2">
+                          <Label>Rótulo</Label>
+                          <Input value={stat.label} onChange={(e) => updateHeroStat(index, 'label', e.target.value)} />
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                  <Button onClick={addHeroStat} variant="outline" className="w-full border-dashed">
+                    <Plus className="h-4 w-4 mr-2" /> Adicionar Estatística ao Hero
+                  </Button>
+                </div>
+
+                <Button onClick={() => handleSave('hero')} className="mt-8 w-full">Salvar Alterações Hero</Button>
               </CardContent>
             </Card>
           </TabsContent>
@@ -253,6 +329,13 @@ export default function Admin() {
                       <Textarea 
                         value={solution.description} 
                         onChange={(e) => updateSolution(index, 'description', e.target.value)} 
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label>Benefícios (Separados por vírgula)</Label>
+                      <Input 
+                        value={solution.benefits?.join(', ')} 
+                        onChange={(e) => updateSolution(index, 'benefits', e.target.value.split(',').map(b => b.trim()))} 
                       />
                     </div>
                   </div>
@@ -372,11 +455,25 @@ export default function Admin() {
                         />
                       </div>
                       <div className="space-y-2">
-                        <Label>URL da Logo</Label>
-                        <Input 
-                          value={logo.logo} 
-                          onChange={(e) => updateLogo(index, 'logo', e.target.value)} 
-                        />
+                        <Label>URL da Logo (ou Arquivo Local)</Label>
+                        <div className="flex gap-2">
+                          <Input 
+                            value={logo.logo} 
+                            onChange={(e) => updateLogo(index, 'logo', e.target.value)} 
+                            placeholder="URL da imagem"
+                          />
+                          <div className="relative">
+                            <Button variant="outline" type="button" className="cursor-pointer">
+                              Upload
+                              <input 
+                                type="file" 
+                                className="absolute inset-0 opacity-0 cursor-pointer" 
+                                accept="image/*"
+                                onChange={(e) => handleImageUpload(e, (b64) => updateLogo(index, 'logo', b64))}
+                              />
+                            </Button>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>

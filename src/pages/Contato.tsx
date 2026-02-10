@@ -33,15 +33,42 @@ export default function Contato() {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    
-    setIsSubmitting(false);
-    setIsSubmitted(true);
-    toast({
-      title: "Solicitação enviada!",
-      description: "Nossa equipe entrará em contato em até 48 horas.",
-    });
+    const formData = new FormData(e.currentTarget);
+    const data = Object.fromEntries(formData.entries());
+
+    try {
+      // Envio para o FormSubmit.co
+      const response = await fetch(`https://formsubmit.co/ajax/${company.email}`, {
+        method: "POST",
+        headers: { 
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          ...data,
+          _subject: `Nova Cotação Logtudo: ${data.name}`, // Assunto do email
+          _template: "table", // Formato dos dados no email
+          _captcha: "false"
+        })
+      });
+
+      if (!response.ok) throw new Error("Falha no envio");
+
+      setIsSubmitting(false);
+      setIsSubmitted(true);
+      toast({
+        title: "Solicitação enviada!",
+        description: "Nossa equipe entrará em contato em até 48 horas.",
+      });
+    } catch (error) {
+      console.error(error);
+      setIsSubmitting(false);
+      toast({
+        title: "Erro ao enviar",
+        description: "Houve um problema ao enviar sua solicitação. Por favor, tente novamente ou contate-nos pelo WhatsApp.",
+        variant: "destructive"
+      });
+    }
   };
 
   return (
@@ -94,27 +121,27 @@ export default function Contato() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                       <div className="space-y-2">
                         <Label htmlFor="name">Nome *</Label>
-                        <Input id="name" required placeholder="Seu nome" />
+                        <Input id="name" name="name" required placeholder="Seu nome" />
                       </div>
                       <div className="space-y-2">
                         <Label htmlFor="company">Empresa *</Label>
-                        <Input id="company" required placeholder="Nome da empresa" />
+                        <Input id="company" name="company" required placeholder="Nome da empresa" />
                       </div>
                       <div className="space-y-2">
                         <Label htmlFor="email">E-mail Corporativo *</Label>
-                        <Input id="email" type="email" required placeholder="email@empresa.com" />
+                        <Input id="email" name="email" type="email" required placeholder="email@empresa.com" />
                       </div>
                       <div className="space-y-2">
                         <Label htmlFor="phone">Telefone *</Label>
-                        <Input id="phone" type="tel" required placeholder="(11) 99999-9999" />
+                        <Input id="phone" name="phone" type="tel" required placeholder="(11) 99999-9999" />
                       </div>
                       <div className="space-y-2">
                         <Label htmlFor="cargo">Cargo</Label>
-                        <Input id="cargo" placeholder="Seu cargo" />
+                        <Input id="cargo" name="cargo" placeholder="Seu cargo" />
                       </div>
                       <div className="space-y-2">
                         <Label htmlFor="segment">Segmento</Label>
-                        <Select>
+                        <Select name="segment">
                           <SelectTrigger>
                             <SelectValue placeholder="Selecione" />
                           </SelectTrigger>
@@ -134,7 +161,7 @@ export default function Contato() {
                     <div className="space-y-6 mb-6">
                       <div className="space-y-2">
                         <Label htmlFor="service">Tipo de Serviço</Label>
-                        <Select>
+                        <Select name="service">
                           <SelectTrigger>
                             <SelectValue placeholder="Selecione o serviço desejado" />
                           </SelectTrigger>
@@ -151,7 +178,7 @@ export default function Contato() {
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div className="space-y-2">
                           <Label htmlFor="volume">Volume Estimado (entregas/mês)</Label>
-                          <Select>
+                          <Select name="volume">
                             <SelectTrigger>
                               <SelectValue placeholder="Selecione" />
                             </SelectTrigger>
@@ -167,7 +194,7 @@ export default function Contato() {
                         </div>
                         <div className="space-y-2">
                           <Label htmlFor="regions">Regiões de Atuação</Label>
-                          <Input id="regions" placeholder="Ex: SP, RJ, MG" />
+                          <Input id="regions" name="regions" placeholder="Ex: SP, RJ, MG" />
                         </div>
                       </div>
 
@@ -175,6 +202,7 @@ export default function Contato() {
                         <Label htmlFor="message">Detalhes da Operação</Label>
                         <Textarea 
                           id="message" 
+                          name="message"
                           rows={4} 
                           placeholder="Descreva sua necessidade, tipo de produto, prazos, etc."
                         />

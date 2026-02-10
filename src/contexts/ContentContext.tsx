@@ -148,12 +148,50 @@ const ContentContext = createContext<ContentContextType | undefined>(undefined);
 
 export function ContentProvider({ children }: { children: ReactNode }) {
   const [content, setContent] = useState<ContentState>(defaultState);
+  const [loading, setLoading] = useState(true);
 
-  const updateContent = (section: keyof ContentState, data: any) => {
+  // Load content from API on mount
+  React.useEffect(() => {
+    const fetchContent = async () => {
+      try {
+        const response = await fetch('http://localhost:3000/api/content');
+        if (response.ok) {
+          const data = await response.json();
+          // Merge fetched data with default state to ensure all keys exist
+          // If the DB is empty, it keeps defaultState
+          if (Object.keys(data).length > 0) {
+            setContent(prev => ({ ...prev, ...data }));
+          }
+        }
+      } catch (error) {
+        console.error("Failed to fetch content:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchContent();
+  }, []);
+
+  const updateContent = async (section: keyof ContentState, data: any) => {
+    // Optimistic update
     setContent((prev) => ({
       ...prev,
       [section]: data,
     }));
+
+    // Persist to backend
+    try {
+      await fetch(`http://localhost:3000/api/content/${section}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+    } catch (error) {
+      console.error(`Failed to save section ${section}:`, error);
+      // Optional: Revert state on error if strict consistency is needed
+    }
   };
 
   return (

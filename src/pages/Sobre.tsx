@@ -1,8 +1,5 @@
 import { Link } from "react-router-dom";
-<<<<<<< HEAD
 import { useEffect } from "react";
-=======
->>>>>>> 0c15175d5ca8226e0fae9b2f2a631f39182b1f13
 import { ArrowRight, MessageCircle, Target, Eye, Heart, Play } from "lucide-react";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
@@ -13,13 +10,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { cn } from "@/lib/utils";
-<<<<<<< HEAD
 import malhaLogistica from "@/assets/malha-logistica.png";
-
-=======
-import malhaLogistica from "@/assets/malha-logistica.jpg";
 import equipeLogtudo from "@/assets/equipe-logtudo.jpg";
->>>>>>> 0c15175d5ca8226e0fae9b2f2a631f39182b1f13
 
 function AboutHero() {
   const { ref, isVisible } = useScrollAnimation();
@@ -160,7 +152,6 @@ function VideoSection() {
               isVisible ? "opacity-100 scale-100" : "opacity-0 scale-95"
             )}
           >
-<<<<<<< HEAD
             {/* Embed do YouTube */}
             <iframe
               width="100%"
@@ -172,17 +163,6 @@ function VideoSection() {
               allowFullScreen
               className="absolute inset-0 w-full h-full"
             />
-=======
-            {/* Placeholder for institutional video - replace src with actual YouTube/Vimeo embed */}
-            <div className="absolute inset-0 flex flex-col items-center justify-center bg-foreground/5">
-              <div className="w-20 h-20 rounded-full bg-primary/90 flex items-center justify-center mb-4 cursor-pointer hover:bg-primary transition-colors">
-                <Play className="h-8 w-8 text-primary-foreground ml-1" />
-              </div>
-              <p className="text-muted-foreground text-sm">
-                Insira aqui o link do vídeo institucional
-              </p>
-            </div>
->>>>>>> 0c15175d5ca8226e0fae9b2f2a631f39182b1f13
           </div>
         </div>
       </div>
@@ -231,7 +211,87 @@ function LogisticsNetwork() {
   );
 }
 
-<<<<<<< HEAD
+function TeamSection() {
+
+  const { ref, isVisible } = useScrollAnimation();
+
+
+
+  return (
+
+    <section className="section-padding bg-background">
+
+      <div className="container-tight">
+
+        <div
+
+          ref={ref}
+
+          className={cn(
+
+            "transition-all duration-700",
+
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+
+          )}
+
+        >
+
+          <div className="text-center mb-10">
+
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+
+              Nossa Equipe
+
+            </h2>
+
+            <p className="text-muted-foreground max-w-xl mx-auto">
+
+              Profissionais comprometidos com a excelência operacional e a satisfação dos nossos clientes.
+
+            </p>
+
+          </div>
+
+
+
+          <div
+
+            className={cn(
+
+              "rounded-xl overflow-hidden shadow-card transition-all duration-700 delay-200",
+
+              isVisible ? "opacity-100 scale-100" : "opacity-0 scale-95"
+
+            )}
+
+          >
+
+            <img
+
+              src={equipeLogtudo}
+
+              alt="Equipe da Logtudo em ambiente de trabalho"
+
+              className="w-full h-auto object-cover max-h-[500px]"
+
+              loading="lazy"
+
+            />
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  );
+
+}
+
+
 
 const Sobre = () => {
    useEffect(() => {
@@ -241,67 +301,17 @@ const Sobre = () => {
       behavior: "smooth" // Para rolagem suave, use "smooth"
     });
   }, []); // O array vazio garante que este efeito execute apenas uma vez quando o componente é montado
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
       <main id="sobre" className="pt-16 md:pt-20">
-=======
-function TeamSection() {
-  const { ref, isVisible } = useScrollAnimation();
-
-  return (
-    <section className="section-padding bg-background">
-      <div className="container-tight">
-        <div
-          ref={ref}
-          className={cn(
-            "transition-all duration-700",
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          )}
-        >
-          <div className="text-center mb-10">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Nossa Equipe
-            </h2>
-            <p className="text-muted-foreground max-w-xl mx-auto">
-              Profissionais comprometidos com a excelência operacional e a satisfação dos nossos clientes.
-            </p>
-          </div>
-
-          <div
-            className={cn(
-              "rounded-xl overflow-hidden shadow-card transition-all duration-700 delay-200",
-              isVisible ? "opacity-100 scale-100" : "opacity-0 scale-95"
-            )}
-          >
-            <img
-              src={equipeLogtudo}
-              alt="Equipe da Logtudo em ambiente de trabalho"
-              className="w-full h-auto object-cover max-h-[500px]"
-              loading="lazy"
-            />
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-const Sobre = () => {
-  return (
-    <div className="min-h-screen bg-background">
-      <Header />
-      <main className="pt-16 md:pt-20">
->>>>>>> 0c15175d5ca8226e0fae9b2f2a631f39182b1f13
         <AboutHero />
         <AboutDescription />
         <MissionVisionValues />
         <VideoSection />
         <LogisticsNetwork />
-<<<<<<< HEAD
-=======
         <TeamSection />
->>>>>>> 0c15175d5ca8226e0fae9b2f2a631f39182b1f13
         <CTASection />
         <LocationSection />
       </main>
