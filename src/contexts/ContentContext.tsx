@@ -154,7 +154,8 @@ export function ContentProvider({ children }: { children: ReactNode }) {
   React.useEffect(() => {
     const fetchContent = async () => {
       try {
-        const response = await fetch('http://localhost:3000/api/content');
+        const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+        const response = await fetch(`${apiUrl}/api/content`);
         if (response.ok) {
           const data = await response.json();
           // Merge fetched data with default state to ensure all keys exist
@@ -181,7 +182,8 @@ export function ContentProvider({ children }: { children: ReactNode }) {
 
     // Persist to backend
     try {
-      await fetch(`http://localhost:3000/api/content/${section}`, {
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+      await fetch(`${apiUrl}/api/content/${section}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

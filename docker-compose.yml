@@ -1,0 +1,36 @@
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: logtudo-frontend
+    restart: always
+    networks:
+      - web # Rede onde seu Traefik está rodando
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.logtudo-fe.rule=Host(`logtudo.com.br`)"
+      - "traefik.http.routers.logtudo-fe.entrypoints=websecure"
+      - "traefik.http.routers.logtudo-fe.tls.certresolver=myresolver" # Seu resolver do LetsEncrypt
+      - "traefik.http.services.logtudo-fe.loadbalancer.server.port=8080"
+
+  backend:
+    build:
+      context: .
+      dockerfile: server/Dockerfile
+    container_name: logtudo-backend
+    restart: always
+    env_file:
+      - .env
+    networks:
+      - web
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.logtudo-be.rule=Host(`api.logtudo.com.br`)"
+      - "traefik.http.routers.logtudo-be.entrypoints=websecure"
+      - "traefik.http.routers.logtudo-be.tls.certresolver=myresolver"
+      - "traefik.http.services.logtudo-be.loadbalancer.server.port=3000"
+
+networks:
+  web:
+    external: true
