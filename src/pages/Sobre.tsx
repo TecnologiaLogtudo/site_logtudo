@@ -211,87 +211,6 @@ function LogisticsNetwork() {
   );
 }
 
-function TeamSection() {
-
-  const { ref, isVisible } = useScrollAnimation();
-
-
-
-  return (
-
-    <section className="section-padding bg-background">
-
-      <div className="container-tight">
-
-        <div
-
-          ref={ref}
-
-          className={cn(
-
-            "transition-all duration-700",
-
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-
-          )}
-
-        >
-
-          <div className="text-center mb-10">
-
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-
-              Nossa Equipe
-
-            </h2>
-
-            <p className="text-muted-foreground max-w-xl mx-auto">
-
-              Profissionais comprometidos com a excelência operacional e a satisfação dos nossos clientes.
-
-            </p>
-
-          </div>
-
-
-
-          <div
-
-            className={cn(
-
-              "rounded-xl overflow-hidden shadow-card transition-all duration-700 delay-200",
-
-              isVisible ? "opacity-100 scale-100" : "opacity-0 scale-95"
-
-            )}
-
-          >
-
-            <img
-
-              src={equipeLogtudo}
-
-              alt="Equipe da Logtudo em ambiente de trabalho"
-
-              className="w-full h-auto object-cover max-h-[500px]"
-
-              loading="lazy"
-
-            />
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-  );
-
-}
-
-
 
 const Sobre = () => {
    useEffect(() => {
@@ -311,7 +230,6 @@ const Sobre = () => {
         <MissionVisionValues />
         <VideoSection />
         <LogisticsNetwork />
-        <TeamSection />
         <CTASection />
         <LocationSection />
       </main>

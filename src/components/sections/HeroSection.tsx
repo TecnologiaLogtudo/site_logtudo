@@ -2,17 +2,23 @@ import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useContent } from "@/contexts/ContentContext";
+import heroBgImg from "@/assets/hero.png";
 
 export function HeroSection() {
   const { content } = useContent();
   const { hero } = content;
+
+  // Usa a imagem do banco se existir e for uma URL/Base64 válida, caso contrário usa a local
+  const backgroundImage = hero.backgroundImage && (hero.backgroundImage.startsWith('http') || hero.backgroundImage.startsWith('data:image')) 
+    ? hero.backgroundImage 
+    : heroBgImg;
 
   return (
     <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
       {/* Background Image */}
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: `url(${hero.backgroundImage})` }}
+        style={{ backgroundImage: `url(${backgroundImage})` }}
       >
         <div className="absolute inset-0 hero-gradient" style={{ opacity: hero.overlayOpacity || 0.3 }} />
       </div>
