@@ -20,7 +20,7 @@ const App = () => (
       <ContentProvider>
         <Toaster />
         <Sonner />
-        <BrowserRouter>
+        <BrowserRouter basename={import.meta.env.DEV ? "/" : "/Site_logtudo"}>
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/contato" element={<Contato />} />
