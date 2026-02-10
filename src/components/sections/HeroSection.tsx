@@ -1,17 +1,20 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, Phone } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import heroBg from "@/assets/hero-bg.jpg";
+import { useContent } from "@/contexts/ContentContext";
 
 export function HeroSection() {
+  const { content } = useContent();
+  const { hero } = content;
+
   return (
     <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
       {/* Background Image */}
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: `url(${heroBg})` }}
+        style={{ backgroundImage: `url(${hero.backgroundImage})` }}
       >
-        <div className="absolute inset-0 hero-gradient opacity-90" />
+        <div className="absolute inset-0 hero-gradient" style={{ opacity: hero.overlayOpacity || 0.3 }} />
       </div>
       
       {/* Content */}
@@ -21,25 +24,21 @@ export function HeroSection() {
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary-foreground/10 border border-primary-foreground/20 backdrop-blur-sm mb-6 animate-fade-in" style={{ animationDelay: '0.1s' }}>
             <span className="w-2 h-2 rounded-full bg-[hsl(142,70%,50%)] animate-pulse" />
             <span className="text-sm font-medium text-primary-foreground/90">
-              Operações em todo o Nordeste
+              {hero.badge}
             </span>
           </div>
           
           {/* Headline */}
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary-foreground leading-tight tracking-tight mb-6 animate-fade-in" style={{ animationDelay: '0.2s' }}>
-            Mais do que transportar,{" "}
-            <span className="text-[hsl(197,70%,70%)]">conectamos</span>{" "}
+            {hero.headlinePart1}
+            <span className="text-[hsl(197,70%,70%)]">{hero.headlineHighlight}</span>{" "}
             <br className="hidden md:block" />
-            <span className="md:whitespace-nowrap">negócios com inteligência</span>
+            <span className="md:whitespace-nowrap">{hero.headlinePart2}</span>
           </h1>
           
           {/* Stats */}
           <div className="flex flex-wrap gap-8 mb-10">
-            {[
-              { value: "98,5%", label: "SLA de Entrega", delay: "0.4s" },
-              { value: "+500", label: "Cidades Atendidas", delay: "0.5s" },
-              { value: "+2M", label: "Entregas/Mês", delay: "0.6s" },
-            ].map((stat) => (
+            {hero.stats.map((stat) => (
               <div 
                 key={stat.label} 
                 className="text-center md:text-left animate-fade-in"

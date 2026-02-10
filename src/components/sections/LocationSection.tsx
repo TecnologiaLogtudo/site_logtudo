@@ -1,9 +1,12 @@
 import { MapPin, Phone, Mail, Clock } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { Card, CardContent } from "@/components/ui/card";
+import { useContent } from "@/contexts/ContentContext";
 
 export function LocationSection() {
   const { ref: sectionRef, isVisible } = useScrollAnimation({ threshold: 0.1 });
+  const { content } = useContent();
+  const { company } = content;
 
   return (
     <section
@@ -43,9 +46,7 @@ export function LocationSection() {
                 <div>
                   <h3 className="font-semibold text-foreground mb-1">Endereço</h3>
                   <p className="text-muted-foreground text-sm">
-                    Via Urbana, s/n - CIA Sul
-                    <br />
-                    Simões Filho - BA, 43721-450
+                    {company.address}
                   </p>
                 </div>
               </div>
@@ -58,10 +59,10 @@ export function LocationSection() {
                 <div>
                   <h3 className="font-semibold text-foreground mb-1">Telefone</h3>
                   <a
-                    href="tel:+5571984288956"
+                    href={`tel:${company.phoneLink}`}
                     className="text-muted-foreground text-sm hover:text-primary transition-colors"
                   >
-                    (71) 98428-8956
+                    {company.phone}
                   </a>
                 </div>
               </div>
@@ -74,10 +75,10 @@ export function LocationSection() {
                 <div>
                   <h3 className="font-semibold text-foreground mb-1">E-mail</h3>
                   <a
-                    href="mailto:contato@logtudo.com.br"
+                    href={`mailto:${company.email}`}
                     className="text-muted-foreground text-sm hover:text-primary transition-colors"
                   >
-                    sucessoaocliente@logtudo.com.br
+                    {company.email}
                   </a>
                 </div>
               </div>
@@ -90,7 +91,7 @@ export function LocationSection() {
                 <div>
                   <h3 className="font-semibold text-foreground mb-1">Horário</h3>
                   <p className="text-muted-foreground text-sm">
-                    Segunda a Sexta: 08h às 17h
+                    {company.hours}
                   </p>
                 </div>
               </div>

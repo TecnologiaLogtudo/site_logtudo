@@ -11,8 +11,12 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Phone, Mail, MapPin, Send, CheckCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { useContent } from "@/contexts/ContentContext";
 
 export default function Contato() {
+  const { content } = useContent();
+  const { company } = content;
+
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -204,8 +208,8 @@ export default function Contato() {
                       </div>
                       <div>
                         <p className="font-medium text-foreground">Telefone</p>
-                        <a href="tel:+5571984288956" className="text-muted-foreground hover:text-primary transition-colors">
-                          (71) 98428-8956
+                        <a href={`tel:${company.phoneLink}`} className="text-muted-foreground hover:text-primary transition-colors">
+                          {company.phone}
                         </a>
                       </div>
                     </div>
@@ -215,8 +219,8 @@ export default function Contato() {
                       </div>
                       <div>
                         <p className="font-medium text-foreground">E-mail</p>
-                        <a href="mailto:sucessoaoclientel@logtudo.com.br" className="text-muted-foreground hover:text-primary transition-colors">
-                          sucessoaocliente@logtudo.com.br
+                        <a href={`mailto:${company.email}`} className="text-muted-foreground hover:text-primary transition-colors">
+                          {company.email}
                         </a>
                       </div>
                     </div>
@@ -226,8 +230,8 @@ export default function Contato() {
                       </div>
                       <div>
                         <p className="font-medium text-foreground">Endereço</p>
-                        <p className="text-muted-foreground">
-                          Simões Filho, BA - Brasil
+                        <p className="text-muted-foreground whitespace-pre-line">
+                          {company.address}
                         </p>
                       </div>
                     </div>
@@ -244,7 +248,7 @@ export default function Contato() {
                   </p>
                   <Button variant="whatsapp" className="w-full" asChild>
                     <a 
-                      href="https://wa.me/5571984288956?text=Olá, gostaria de uma cotação" 
+                      href={`https://wa.me/${company.whatsapp}?text=Olá, gostaria de uma cotação`}
                       target="_blank" 
                       rel="noopener noreferrer"
                     >

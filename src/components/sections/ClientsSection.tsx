@@ -2,46 +2,12 @@ import { Quote } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { cn } from "@/lib/utils";
-
-// 1. Importe suas logos aqui (ajuste o nome do arquivo conforme salvou em assets)
-import logoCliente1 from "@/assets/logo-amazon.webp";
-import logoCliente2 from "@/assets/logo-Latam.png";
-import logoCliente3 from "@/assets/Logo-lactalis.webp";
-import logoCliente4 from "@/assets/logo-itambe.png";
-import logoCliente5 from "@/assets/3-coracoes.png";
-
-const stats = [
-  { value: "+150", label: "Clientes Ativos" },
-  { value: "12+", label: "Anos de Mercado" },
-  { value: "+2M", label: "Entregas/Mês" },
-  { value: "98,5%", label: "SLA Médio" },
-];
-
-const testimonials = [
-  {
-    quote: "A Logtudo transformou nossa operação last mile. Reduzimos devoluções em 40% e o SLA saltou de 92% para 98%.",
-    author: "Carlos Mendes",
-    role: "Diretor de Supply Chain",
-    company: "E-commerce Nacional",
-  },
-  {
-    quote: "Parceria estratégica que nos permitiu escalar de 50 mil para 300 mil entregas/mês sem perder qualidade.",
-    author: "Ana Paula Costa",
-    role: "Head de Operações",
-    company: "Distribuidora B2B",
-  },
-];
-
-const clientLogos = [
-  // 2. Substitua 'null' pela variável da logo importada (ex: logo: logoCliente1)
-  { name: "E-Commerce A", logo: logoCliente1 },
-  { name: "Indústria B", logo: logoCliente2 },
-  { name: "Varejo C", logo: logoCliente3 },
-  { name: "Marketplace D", logo: logoCliente4 },
-  { name: "Distribuidora E", logo: logoCliente5 }
-];
+import { useContent } from "@/contexts/ContentContext";
 
 export function ClientsSection() {
+  const { content } = useContent();
+  const { clients } = content;
+
   const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation();
   const { ref: statsRef, isVisible: statsVisible } = useScrollAnimation({ threshold: 0.1 });
   const { ref: testimonialsRef, isVisible: testimonialsVisible } = useScrollAnimation({ threshold: 0.1 });
@@ -70,7 +36,7 @@ export function ClientsSection() {
 
         {/* Stats */}
         <div ref={statsRef} className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
-          {stats.map((stat, index) => (
+          {clients.stats.map((stat, index) => (
             <div 
               key={stat.label} 
               className={cn(
@@ -91,7 +57,7 @@ export function ClientsSection() {
 
         {/* Testimonials */}
         <div ref={testimonialsRef} className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-          {testimonials.map((testimonial, index) => (
+          {clients.testimonials.map((testimonial, index) => (
             <Card 
               key={testimonial.author} 
               className={cn(
@@ -139,7 +105,7 @@ export function ClientsSection() {
             Empresas que confiam em nossa operação
           </p>
           <div className="grid grid-cols-2 gap-4 md:flex md:flex-nowrap md:justify-center md:gap-8 items-center">
-            {clientLogos.map((client, index) => (
+            {clients.logos.map((client, index) => (
               <div
                 key={client.name}
                 className={cn(

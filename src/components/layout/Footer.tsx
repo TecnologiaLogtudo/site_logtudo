@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { MapPin, Phone, Mail, Linkedin, Instagram } from "lucide-react";
 import logoLogtudo from "@/assets/logo_logtudo.png";
+import { useContent } from "@/contexts/ContentContext";
 
 const footerLinks = {
   empresa: [
@@ -17,6 +18,9 @@ const footerLinks = {
 };
 
 export function Footer() {
+  const { content } = useContent();
+  const { company } = content;
+
   return (
     <footer className="bg-foreground text-background">
       <div className="container-tight section-padding">
@@ -35,18 +39,18 @@ export function Footer() {
             <div className="space-y-3 text-sm text-background/70">
               <div className="flex items-start gap-3">
                 <MapPin className="h-4 w-4 mt-1 flex-shrink-0" />
-                <span>Simões Filho, BA - Brasil</span>
+                <span className="whitespace-pre-line">{company.address}</span>
               </div>
               <div className="flex items-center gap-3">
                 <Phone className="h-4 w-4 flex-shrink-0" />
-                <a href="tel:+5571984288956" className="hover:text-background transition-colors">
-                  (71) 98428-8956
+                <a href={`tel:${company.phoneLink}`} className="hover:text-background transition-colors">
+                  {company.phone}
                 </a>
               </div>
               <div className="flex items-center gap-3">
                 <Mail className="h-4 w-4 flex-shrink-0" />
-                <a href="mailto:comercial@logtudo.com.br" className="hover:text-background transition-colors">
-                  sucessoaocliente@logtudo.com.br
+                <a href={`mailto:${company.email}`} className="hover:text-background transition-colors">
+                  {company.email}
                 </a>
               </div>
             </div>
