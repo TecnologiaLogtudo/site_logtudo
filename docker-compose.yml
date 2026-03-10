@@ -34,7 +34,7 @@ services:
       - "3000"
     labels:
       - traefik.enable=true
-      - traefik.http.routers.logtudo-app.rule=Host(`site.logtudo.com.br`)
+      - traefik.http.routers.logtudo-app.rule=Host(`e4844gw8gocco0c0cwk0kckw.72.61.25.133.sslip.io`)
       - traefik.http.routers.logtudo-app.entrypoints=http,https
       - traefik.http.services.logtudo-app.loadbalancer.server.port=3000
       - coolify.managed=true
