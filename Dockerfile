@@ -1,10 +1,13 @@
 # Estágio de Build do Frontend
-FROM node:20-alpine AS frontend-build
+FROM node:20-slim AS frontend-build
 WORKDIR /app
 COPY package*.json ./
-RUN npm install
+# Usar npm ci para garantir que as versões do lockfile sejam respeitadas
+# --legacy-peer-deps pode ajudar se houver conflitos de dependência no ambiente Docker
+RUN npm ci --legacy-peer-deps
 COPY . .
-# O build do Vite pode falhar se faltarem arquivos públicos ou de configuração
+# Aumentar o limite de memória para o Node durante o build
+ENV NODE_OPTIONS="--max-old-space-size=4096"
 RUN npm run build
 
 # Estágio de Produção (Backend + Frontend)

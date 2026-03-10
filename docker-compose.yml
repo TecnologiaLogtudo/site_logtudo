@@ -13,7 +13,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-postgres}"]
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-postgres} -d ${DB_NAME:-site_logtudo_db}"]
       interval: 5s
       timeout: 5s
       retries: 5
@@ -23,7 +23,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: logtudo-site
+    container_name: logtudo-app
     restart: always
     environment:
       DATABASE_URL: postgresql://${DB_USER:-postgres}:${DB_PASSWORD:-postgres}@db:5432/${DB_NAME:-site_logtudo_db}
@@ -34,7 +34,7 @@ services:
       - "3000"
     labels:
       - traefik.enable=true
-      - traefik.http.routers.logtudo-app.rule=Host(`e4844gw8gocco0c0cwk0kckw.72.61.25.133.sslip.io`)
+      - traefik.http.routers.logtudo-app.rule=Host(`site.logtudo.com.br`)
       - traefik.http.routers.logtudo-app.entrypoints=http,https
       - traefik.http.services.logtudo-app.loadbalancer.server.port=3000
       - coolify.managed=true
