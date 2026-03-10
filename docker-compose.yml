@@ -4,8 +4,8 @@ services:
   frontend:
     build: .
     restart: always
-    ports:
-      - "8080:80"
+    expose:
+      - '8000'
     environment:
       - VITE_API_URL=http://localhost:3000
     networks:
@@ -18,8 +18,8 @@ services:
       context: .
       dockerfile: server/Dockerfile
     restart: always
-    ports:
-      - "3000:3000"
+    expose:
+      - '3000'
     environment:
       - DATABASE_URL=postgresql://postgres:postgres@db:5432/logtudo
     networks:
