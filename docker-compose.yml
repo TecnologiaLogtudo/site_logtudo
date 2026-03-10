@@ -1,30 +1,46 @@
+version: '3.8'
+
 services:
   frontend:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: logtudo-frontend
+    build: .
     restart: always
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.logtudo-fe.rule=Host(`i0wksokggwwc4skwk08ocws4.72.61.25.133.sslip.io`)"
-      - "traefik.http.routers.logtudo-fe.entrypoints=websecure"
-      - "traefik.http.routers.logtudo-fe.tls.certresolver=myresolver" # Seu resolver do LetsEncrypt
-      - "traefik.http.services.logtudo-fe.loadbalancer.server.port=8080"
-
-  backend:
-    build:
-      context: .
-      dockerfile: server/Dockerfile
-    container_name: logtudo-backend
-    restart: always
-    env_file:
-      - .env
+    ports:
+      - "8080:80"
+    environment:
+      - VITE_API_URL=http://localhost:3000
     networks:
       - web
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.logtudo-be.rule=Host(`vwog8occ48sgsg8g4swo8c4w.72.61.25.133.sslip.io`)"
-      - "traefik.http.routers.logtudo-be.entrypoints=websecure"
-      - "traefik.http.routers.logtudo-be.tls.certresolver=myresolver"
-      - "traefik.http.services.logtudo-be.loadbalancer.server.port=3000"
+    depends_on:
+      - backend
+
+  backend:
+    build: ./server
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/logtudo
+    networks:
+      - web
+    depends_on:
+      - db
+
+  db:
+    image: postgres:15-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=logtudo
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - web
+
+# A correção principal está aqui: definindo a rede 'web'
+networks:
+  web:
+    driver: bridge
+
+volumes:
+  postgres_data:
