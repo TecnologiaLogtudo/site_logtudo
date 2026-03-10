@@ -18,4 +18,4 @@ COPY --from=build /app/dist ./dist
 EXPOSE 8080
 
 # O comando -s (single) redireciona todas as rotas para o index.html (essencial para React Router)
-CMD ["serve", "-s", "dist", "-l", "8080"]
+CMD ["serve", "-s", "dist", "-l", "8000"]
