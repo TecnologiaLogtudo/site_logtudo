@@ -4,6 +4,7 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY . .
+# O build do Vite pode falhar se faltarem arquivos públicos ou de configuração
 RUN npm run build
 
 # Estágio de Produção (Backend + Frontend)
@@ -11,10 +12,11 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
-# Dependências para o driver do Postgres
+# Dependências para o driver do Postgres e curl para healthcheck
 RUN apt-get update && apt-get install -y \
     build-essential \
     libpq-dev \
+    curl \
     && rm -rf /var/lib/apt/lists/*
 
 # Instalar dependências do Python
