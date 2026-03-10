@@ -8,7 +8,7 @@ import logoCliente2 from "@/assets/logo-Latam.png";
 import logoCliente3 from "@/assets/Logo-lactalis.webp";
 import logoCliente4 from "@/assets/logo-itambe.png";
 import logoCliente5 from "@/assets/3-coracoes.png";
-import logoCliente6 from "@/assets/logo-president.png";
+import logoCliente6 from "@/assets/logo_president.png";
 import logoCliente7 from "@/assets/logo_parmalat.png";
 import logoCliente8 from "@/assets/logo_batavo.png";
 
