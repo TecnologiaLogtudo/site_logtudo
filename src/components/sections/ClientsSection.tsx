@@ -14,7 +14,7 @@ export function ClientsSection() {
   const { ref: logosRef, isVisible: logosVisible } = useScrollAnimation({ threshold: 0.1 });
 
   return (
-    <section className="section-padding bg-muted/30">
+    <section className="section-padding bg-muted/30 overflow-hidden">
       <div className="container-tight">
         {/* Header */}
         <div 
@@ -34,13 +34,16 @@ export function ClientsSection() {
           </h2>
         </div>
 
-        {/* Stats */}
-        <div ref={statsRef} className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
+        {/* Stats - Centered flexible grid */}
+        <div 
+          ref={statsRef} 
+          className="flex flex-wrap justify-center gap-6 mb-12"
+        >
           {clients.stats.map((stat, index) => (
             <div 
               key={stat.label} 
               className={cn(
-                "text-center p-6 rounded-xl bg-card shadow-card transition-all duration-500 hover:scale-105",
+                "flex-1 min-w-[160px] max-w-[240px] text-center p-6 rounded-xl bg-card shadow-card transition-all duration-500 hover:scale-105",
                 statsVisible 
                   ? "opacity-100 translate-y-0" 
                   : "opacity-0 translate-y-8"
@@ -91,7 +94,7 @@ export function ClientsSection() {
           ))}
         </div>
 
-        {/* Client logos placeholder */}
+        {/* Client logos with horizontal scroll */}
         <div 
           ref={logosRef}
           className={cn(
@@ -101,32 +104,37 @@ export function ClientsSection() {
               : "opacity-0 translate-y-8"
           )}
         >
-          <p className="text-center text-sm text-muted-foreground mb-8">
+          <p className="text-center text-sm text-muted-foreground mb-10">
             Empresas que confiam em nossa operação
           </p>
-          <div className="grid grid-cols-2 gap-4 md:flex md:flex-nowrap md:justify-center md:gap-8 items-center">
-            {clients.logos.map((client, index) => (
-              <div
-                key={client.name}
-                className={cn(
-                  "h-40 px-4 flex items-center justify-center rounded-lg transition-all duration-500 hover:scale-105",
-                  logosVisible 
-                    ? "opacity-100 translate-y-0" 
-                    : "opacity-0 translate-y-4"
-                )}
-                style={{ transitionDelay: logosVisible ? `${index * 50}ms` : "0ms" }}
-              >
-                {client.logo ? (
-                  <img 
-                    src={client.logo} 
-                    alt={client.name} 
-                    className="h-full w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300" 
-                  />
-                ) : (
-                  <span className="text-sm font-medium text-muted-foreground">{client.name}</span>
-                )}
-              </div>
-            ))}
+          
+          <div className="w-full overflow-x-auto scrollbar-hide -mx-4 px-4 pb-4">
+            <div className="flex items-center gap-12 md:gap-20 min-w-max">
+              {clients.logos.map((client, index) => (
+                <div
+                  key={client.name}
+                  className={cn(
+                    "h-24 md:h-32 flex items-center justify-center transition-all duration-500 hover:scale-110",
+                    logosVisible 
+                      ? "opacity-100 translate-y-0" 
+                      : "opacity-0 translate-y-4"
+                  )}
+                  style={{ transitionDelay: logosVisible ? `${index * 50}ms` : "0ms" }}
+                >
+                  {client.logo ? (
+                    <img 
+                      src={client.logo} 
+                      alt={client.name} 
+                      className="h-full w-auto max-w-[180px] object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300" 
+                    />
+                  ) : (
+                    <span className="text-lg font-medium text-muted-foreground whitespace-nowrap px-4">
+                      {client.name}
+                    </span>
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
