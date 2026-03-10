@@ -1,5 +1,6 @@
 # Dependencies
 node_modules
+**/node_modules
 .pnp
 .pnp.js
 
@@ -13,6 +14,7 @@ build
 # Misc
 .DS_Store
 *.pem
+**/__pycache__
 
 # Debug
 npm-debug.log*

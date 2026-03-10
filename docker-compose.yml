@@ -14,7 +14,9 @@ services:
       - backend
 
   backend:
-    build: ./server
+    build:
+      context: .
+      dockerfile: server/Dockerfile
     restart: always
     ports:
       - "3000:3000"
