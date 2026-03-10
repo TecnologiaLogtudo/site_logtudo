@@ -3,11 +3,14 @@ import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 // Importações de imagens padrão
 import heroBgImg from "@/assets/hero.png";
-import logoCliente1 from "@/assets/logo-amazon.webp";
+import logoCliente1 from "@/assets/logo-dpa-brasil.png";
 import logoCliente2 from "@/assets/logo-Latam.png";
 import logoCliente3 from "@/assets/Logo-lactalis.webp";
 import logoCliente4 from "@/assets/logo-itambe.png";
 import logoCliente5 from "@/assets/3-coracoes.png";
+import logoCliente6 from "@/assets/logo-president.png";
+import logoCliente7 from "@/assets/logo_parmalat.png";
+import logoCliente8 from "@/assets/logo_batavo.png";
 
 export interface HeroData {
   badge: string;
@@ -72,7 +75,7 @@ const defaultState: ContentState = {
     headlinePart2: "negócios com inteligência",
     stats: [
       { value: "98,5%", label: "SLA de Entrega", delay: "0.4s" },
-      { value: "+500", label: "Cidades Atendidas", delay: "0.5s" },
+      { value: "+200", label: "Cidades Atendidas", delay: "0.5s" },
       { value: "+2M", label: "Entregas/Mês", delay: "0.6s" },
     ],
     backgroundImage: heroBgImg,
@@ -126,20 +129,23 @@ const defaultState: ContentState = {
       },
     ],
     logos: [
-      { name: "E-Commerce A", logo: logoCliente1 },
-      { name: "Indústria B", logo: logoCliente2 },
-      { name: "Varejo C", logo: logoCliente3 },
-      { name: "Marketplace D", logo: logoCliente4 },
-      { name: "Distribuidora E", logo: logoCliente5 }
+      { name: "Cliente 1", logo: logoCliente1 },
+      { name: "Cliente 2", logo: logoCliente2 },
+      { name: "Cliente 3", logo: logoCliente3 },
+      { name: "Cliente 4", logo: logoCliente4 },
+      { name: "Cliente 5", logo: logoCliente5 },
+      { name: "Cliente 6", logo: logoCliente6 },
+      { name: "Cliente 7", logo: logoCliente7 },
+      { name: "Cliente 8", logo: logoCliente8 },
     ]
   },
   company: {
     address: "Via Urbana, s/n - CIA Sul\nSimões Filho - BA, 43721-450",
-    phone: "(71) 98428-8956",
-    phoneLink: "+5571984288956",
-    email: "sucessoaocliente@logtudo.com.br",
+    phone: "(71) 4117-1717",
+    phoneLink: "+557141171717",
+    email: "contato@logtudo.com.br",
     hours: "Segunda a Sexta: 08h às 17h",
-    whatsapp: "5571984288956",
+    whatsapp: "557199230093",
     whatsappMessage: "Olá, gostaria de mais informações sobre as soluções logísticas da Logtudo"
   }
 };
@@ -154,7 +160,7 @@ export function ContentProvider({ children }: { children: ReactNode }) {
   React.useEffect(() => {
     const fetchContent = async () => {
       try {
-        const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+        const apiUrl = import.meta.env.VITE_API_URL || '';
         const response = await fetch(`${apiUrl}/api/content`);
         if (response.ok) {
           const data = await response.json();
@@ -182,7 +188,7 @@ export function ContentProvider({ children }: { children: ReactNode }) {
 
     // Persist to backend
     try {
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+      const apiUrl = import.meta.env.VITE_API_URL || '';
       await fetch(`${apiUrl}/api/content/${section}`, {
         method: 'POST',
         headers: {

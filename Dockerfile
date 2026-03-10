@@ -1,21 +1,33 @@
-# Estágio de Build
-FROM node:20-alpine AS build
+# Estágio de Build do Frontend
+FROM node:20-alpine AS frontend-build
 WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY . .
 RUN npm run build
 
-# Estágio de Produção
-FROM node:20-alpine
+# Estágio de Produção (Backend + Frontend)
+FROM python:3.11-slim
+
 WORKDIR /app
-# Instala o servidor estático 'serve'
-RUN npm install -g serve
-# Copia apenas o resultado do build
-COPY --from=build /app/dist ./dist
 
-# Porta padrão do 'serve'
-EXPOSE 8080
+# Dependências para o driver do Postgres
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    libpq-dev \
+    && rm -rf /var/lib/apt/lists/*
 
-# O comando -s (single) redireciona todas as rotas para o index.html (essencial para React Router)
-CMD ["serve", "-s", "dist", "-l", "8000"]
+# Instalar dependências do Python
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copiar o resultado do build do frontend
+COPY --from=frontend-build /app/dist ./dist
+
+# Copiar o código do backend
+COPY server/ .
+
+EXPOSE 3000
+
+# Comando para rodar a aplicação
+CMD ["python", "main.py"]

@@ -34,7 +34,7 @@ function AboutHero() {
           </h1>
           <p className="text-lg md:text-xl text-primary-foreground/80 leading-relaxed">
             Somos uma empresa especializada em logística. Temos como objetivo fornecer uma rede de suporte
-            para todas as etapas na área de armazenagem, transporte, distribuição, movimentação de carga,
+            para todas as etapas na área de transporte, distribuição, movimentação de carga,
             cross docking e coleta/entrega.
           </p>
         </div>
