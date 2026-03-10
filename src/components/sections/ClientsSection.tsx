@@ -1,8 +1,17 @@
-import { Quote } from "lucide-react";
+import { Quote, ChevronLeft, ChevronRight } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { cn } from "@/lib/utils";
 import { useContent } from "@/contexts/ContentContext";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import Autoplay from "embla-carousel-autoplay";
+import React from "react";
 
 export function ClientsSection() {
   const { content } = useContent();
@@ -12,6 +21,10 @@ export function ClientsSection() {
   const { ref: statsRef, isVisible: statsVisible } = useScrollAnimation({ threshold: 0.1 });
   const { ref: testimonialsRef, isVisible: testimonialsVisible } = useScrollAnimation({ threshold: 0.1 });
   const { ref: logosRef, isVisible: logosVisible } = useScrollAnimation({ threshold: 0.1 });
+
+  const plugin = React.useRef(
+    Autoplay({ delay: 3000, stopOnInteraction: false })
+  );
 
   return (
     <section className="section-padding bg-muted/30 overflow-hidden">
@@ -94,7 +107,7 @@ export function ClientsSection() {
           ))}
         </div>
 
-        {/* Client logos with horizontal scroll */}
+        {/* Client logos with Carrossel */}
         <div 
           ref={logosRef}
           className={cn(
@@ -104,38 +117,61 @@ export function ClientsSection() {
               : "opacity-0 translate-y-8"
           )}
         >
-          <p className="text-center text-sm text-muted-foreground mb-10">
-            Empresas que confiam em nossa operação
-          </p>
-          
-          <div className="w-full overflow-x-auto scrollbar-hide -mx-4 px-4 pb-4">
-            <div className="flex items-center gap-12 md:gap-20 min-w-max">
-              {clients.logos.map((client, index) => (
-                <div
-                  key={client.name}
-                  className={cn(
-                    "h-24 md:h-32 flex items-center justify-center transition-all duration-500 hover:scale-110",
-                    logosVisible 
-                      ? "opacity-100 translate-y-0" 
-                      : "opacity-0 translate-y-4"
-                  )}
-                  style={{ transitionDelay: logosVisible ? `${index * 50}ms` : "0ms" }}
-                >
-                  {client.logo ? (
-                    <img 
-                      src={client.logo} 
-                      alt={client.name} 
-                      className="h-full w-auto max-w-[180px] object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300" 
-                    />
-                  ) : (
-                    <span className="text-lg font-medium text-muted-foreground whitespace-nowrap px-4">
-                      {client.name}
-                    </span>
-                  )}
-                </div>
-              ))}
+          <div className="flex justify-between items-end mb-10">
+            <p className="text-sm text-muted-foreground">
+              Empresas que confiam em nossa operação
+            </p>
+            {/* Custom Carousel Controls Container */}
+            <div className="flex gap-2 relative">
+              {/* O carrossel precisa ser declarado para que esses botões funcionem se usarmos os componentes padrão, 
+                  mas para posicionar no topo direito, usaremos a API do Carousel do shadcn com os componentes filhos. */}
             </div>
           </div>
+          
+          <Carousel
+            plugins={[plugin.current]}
+            onMouseEnter={plugin.current.stop}
+            onMouseLeave={plugin.current.play}
+            className="w-full"
+            opts={{
+              align: "start",
+              loop: true,
+              dragFree: true,
+            }}
+          >
+            <div className="absolute -top-16 right-0 flex gap-2">
+              <CarouselPrevious className="static translate-y-0 h-8 w-8" />
+              <CarouselNext className="static translate-y-0 h-8 w-8" />
+            </div>
+
+            <CarouselContent className="-ml-4">
+              {clients.logos.map((client, index) => (
+                <CarouselItem key={client.name} className="pl-4 basis-1/2 md:basis-1/3 lg:basis-1/4 xl:basis-1/5">
+                  <div
+                    className={cn(
+                      "h-24 md:h-32 flex items-center justify-center transition-all duration-500 hover:scale-110",
+                      logosVisible 
+                        ? "opacity-100 translate-y-0" 
+                        : "opacity-0 translate-y-4"
+                    )}
+                    style={{ transitionDelay: logosVisible ? `${index * 50}ms` : "0ms" }}
+                  >
+                    {client.logo ? (
+                      <img 
+                        src={client.logo} 
+                        alt={client.name} 
+                        className="h-full w-auto max-w-[150px] object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300 pointer-events-none select-none" 
+                      />
+                    ) : (
+                      <span className="text-lg font-medium text-muted-foreground whitespace-nowrap px-4 select-none">
+                        {client.name}
+                      </span>
+                    )}
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+          </Carousel>
         </div>
       </div>
     </section>
