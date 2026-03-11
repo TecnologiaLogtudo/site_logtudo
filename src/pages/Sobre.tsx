@@ -10,8 +10,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { cn } from "@/lib/utils";
+import { useContent } from "@/contexts/ContentContext";
 import malhaLogistica from "@/assets/malha-logistica.png";
-import equipeLogtudo from "@/assets/equipe-logtudo.jpg";
 
 function AboutHero() {
   const { ref, isVisible } = useScrollAnimation();
@@ -172,6 +172,8 @@ function VideoSection() {
 
 function LogisticsNetwork() {
   const { ref, isVisible } = useScrollAnimation();
+  const { content } = useContent();
+  const { coverage } = content;
 
   return (
     <section className="section-padding bg-secondary">
@@ -188,22 +190,39 @@ function LogisticsNetwork() {
               Nossa Malha Logística
             </h2>
             <p className="text-muted-foreground max-w-xl mx-auto">
-              Cobertura estratégica com pontos de distribuição que garantem agilidade e eficiência em toda a operação.
+              Cobertura estratégica com pontos de distribuição que garantem agilidade e eficiência em toda a operação. Presente em mais de 90 cidades
             </p>
           </div>
 
           <div
             className={cn(
-              "rounded-xl overflow-hidden shadow-card transition-all duration-700 delay-200",
+              "group relative rounded-xl overflow-hidden shadow-card transition-all duration-700 delay-200",
               isVisible ? "opacity-100 scale-100" : "opacity-0 scale-95"
             )}
           >
             <img
               src={malhaLogistica}
               alt="Malha logística da Logtudo com pontos de distribuição no Brasil"
-              className="w-full h-auto object-cover"
+              className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105"
               loading="lazy"
             />
+
+            {/* Overlay com Tabela de Cidades */}
+            <div className="absolute inset-0 bg-black/90 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center p-6 md:p-10">
+              <h3 className="text-white text-xl md:text-2xl font-bold mb-6 text-center">Nossa Cobertura</h3>
+              
+              <div className="w-full max-h-full overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-primary scrollbar-track-white/10">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6 max-w-5xl mx-auto">
+                  {coverage.map((item) => (
+                    <div key={item.state} className="border-b border-white/20 pb-3">
+                      <span className="block text-primary font-bold text-lg mb-1">{item.state}</span>
+                      <p className="text-gray-300 text-sm leading-relaxed">{item.cities}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <p className="text-white/40 text-xs mt-4 text-center">* Principais polos de atuação. Consulte nossa equipe para lista completa.</p>
+            </div>
           </div>
         </div>
       </div>

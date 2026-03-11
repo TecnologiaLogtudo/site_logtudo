@@ -22,6 +22,7 @@ export default function Admin() {
   const [companyForm, setCompanyForm] = useState(content.company);
   const [solutionsForm, setSolutionsForm] = useState(content.solutions);
   const [clientsForm, setClientsForm] = useState(content.clients);
+  const [coverageForm, setCoverageForm] = useState(content.coverage);
 
   // Sincronizar estado se o contexto mudar (opcional, útil para carregamento inicial)
   useEffect(() => {
@@ -29,6 +30,7 @@ export default function Admin() {
     setCompanyForm(content.company);
     setSolutionsForm(content.solutions);
     setClientsForm(content.clients);
+    setCoverageForm(content.coverage);
   }, [content]);
 
   const handleSave = (section: string) => {
@@ -44,6 +46,9 @@ export default function Admin() {
         break;
       case 'clients':
         updateContent("clients", clientsForm);
+        break;
+      case 'coverage':
+        updateContent("coverage", coverageForm);
         break;
     }
     toast({ title: "Alterações salvas!", description: `Seção ${section} atualizada com sucesso.` });
@@ -158,6 +163,26 @@ export default function Admin() {
     setClientsForm(newClients);
   };
 
+  // Helper para Cobertura (Coverage)
+  const updateCoverage = (index: number, field: string, value: string) => {
+    const newCoverage = [...coverageForm];
+    newCoverage[index] = { ...newCoverage[index], [field]: value };
+    setCoverageForm(newCoverage);
+  };
+
+  const addCoverage = () => {
+    setCoverageForm([
+      ...coverageForm,
+      { state: "Novo Estado", cities: "Lista de cidades..." }
+    ]);
+  };
+
+  const removeCoverage = (index: number) => {
+    const newCoverage = [...coverageForm];
+    newCoverage.splice(index, 1);
+    setCoverageForm(newCoverage);
+  };
+
   // Helper para upload de imagem (converte para Base64)
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>, callback: (base64: string) => void) => {
     const file = e.target.files?.[0];
@@ -180,11 +205,12 @@ export default function Admin() {
         </div>
         
         <Tabs defaultValue="hero" className="w-full">
-          <TabsList className="grid w-full grid-cols-4 mb-8">
+          <TabsList className="grid w-full grid-cols-5 mb-8">
             <TabsTrigger value="hero">Hero & Capa</TabsTrigger>
             <TabsTrigger value="solutions">Soluções</TabsTrigger>
             <TabsTrigger value="clients">Clientes</TabsTrigger>
             <TabsTrigger value="company">Empresa</TabsTrigger>
+            <TabsTrigger value="coverage">Cobertura</TabsTrigger>
           </TabsList>
 
           {/* HERO TAB */}
@@ -571,6 +597,40 @@ export default function Admin() {
                   </div>
                 </div>
                 <Button onClick={() => handleSave('company')} className="mt-4">Salvar Dados da Empresa</Button>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* COVERAGE TAB */}
+          <TabsContent value="coverage">
+            <Card>
+              <CardHeader>
+                <CardTitle>Cobertura Geográfica</CardTitle>
+                <CardDescription>Gerencie os estados e cidades exibidos no mapa interativo da página Sobre.</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                {coverageForm.map((item, index) => (
+                  <div key={index} className="p-4 border rounded-lg space-y-4 bg-muted/10">
+                    <div className="flex justify-between items-center">
+                      <h3 className="font-semibold">Local {index + 1}</h3>
+                      <Button variant="destructive" size="sm" onClick={() => removeCoverage(index)}>
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                    </div>
+                    <div className="space-y-2">
+                      <Label>Estado / Região</Label>
+                      <Input value={item.state} onChange={(e) => updateCoverage(index, 'state', e.target.value)} />
+                    </div>
+                    <div className="space-y-2">
+                      <Label>Cidades Atendidas</Label>
+                      <Textarea value={item.cities} onChange={(e) => updateCoverage(index, 'cities', e.target.value)} rows={3} />
+                    </div>
+                  </div>
+                ))}
+                <Button onClick={addCoverage} variant="outline" className="w-full border-dashed">
+                  <Plus className="h-4 w-4 mr-2" /> Adicionar Local
+                </Button>
+                <Button onClick={() => handleSave('coverage')} className="w-full mt-4">Salvar Cobertura</Button>
               </CardContent>
             </Card>
           </TabsContent>

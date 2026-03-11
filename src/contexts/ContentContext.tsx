@@ -53,6 +53,11 @@ export interface CompanyData {
   whatsappMessage: string;
 }
 
+export interface CoverageItem {
+  state: string;
+  cities: string;
+}
+
 export interface ContentState {
   hero: HeroData;
   solutions: ServiceData[];
@@ -61,6 +66,7 @@ export interface ContentState {
     testimonials: TestimonialData[];
     logos: ClientLogoData[];
   };
+  coverage: CoverageItem[];
   company: CompanyData;
 }
 
@@ -78,7 +84,7 @@ const defaultState: ContentState = {
     stats: [
       { value: "98,5%", label: "SLA de Entrega", delay: "0.4s" },
       { value: "+200", label: "Cidades Atendidas", delay: "0.5s" },
-      { value: "+55k", label: "Entregas/Mês", delay: "0.6s" },
+      { value: "+55K", label: "Entregas/Mês", delay: "0.6s" },
     ],
     backgroundImage: heroBgImg,
     mobileBackgroundImage: heroMobileBgImg,
@@ -113,7 +119,7 @@ const defaultState: ContentState = {
   clients: {
     stats: [
       { value: "12+", label: "Anos de Mercado" },
-      { value: "+55k", label: "Entregas/Mês" },
+      { value: "+55K", label: "Entregas/Mês" },
       { value: "98,5%", label: "SLA Médio" },
     ],
     testimonials: [
@@ -141,6 +147,28 @@ const defaultState: ContentState = {
       { name: "Cliente 8", logo: logoCliente8 },
     ]
   },
+  coverage: [
+  { state: "AC", cities: "Rio Branco" },
+  { state: "AL", cities: "Maceió, Rio Largo" },
+  { state: "AP", cities: "Macapá" },
+  { state: "BA (Matriz)", cities: "Alagoinhas, Amargosa, Bom Jesus da Lapa, Cachoeira, Camaçari, Candeias, Catu, Conceição do Coité, Cruz das Almas, Dias d'Ávila, Entre Rios, Euclides da Cunha, Feira de Santana, Guanambi, Ilhéus, Irecê, Itabuna, Jacobina, Juazeiro, Lauro de Freitas, Madre de Deus, Mata de São João, Paripiranga, Paulo Afonso, Pojuca, Porto Seguro, Salvador, Santo Amaro, São Francisco do Conde, São Sebastião do Passé, Serrinha, Simões Filho, Teixeira de Freitas, Vera Cruz, Vitória da Conquista" },
+  { state: "CEARÁ", cities: "Fortaleza" },
+  { state: "DF", cities: "Brasília" },
+  { state: "ES", cities: "Serra, Vitória" },
+  { state: "MA", cities: "Imperatriz, São Luís, São Luís Gonzaga do Maranhão" },
+  { state: "MS", cities: "Campo Grande" },
+  { state: "MT", cities: "Lucas do Rio Verde, Várzea Grande" },
+  { state: "PA", cities: "Belém" },
+  { state: "PB", cities: "Bayeux, Campina Grande, João Pessoa" },
+  { state: "PE", cities: "Abreu e Lima, Aliança, Buenos Aires, Cabo de Santo Agostinho, Camaragibe, Carpina, Caruaru, Catende, Escada, Garanhuns, Goiana, Igarassu, Jaboatão dos Guararapes, Moreno, Olinda, Palmares, Paulista, Petrolina, Recife, Ribeirão, São Lourenço da Mata, Serra Talhada, Sirinhaém, Vicência" },
+  { state: "PI", cities: "Teresina" },
+  { state: "RN", cities: "Mossoró, Natal, Parnamirim" },
+  { state: "RO", cities: "Porto Velho" },
+  { state: "RR", cities: "Boa Vista" },
+  { state: "RS", cities: "Porto Alegre, Santana do Livramento" },
+  { state: "SE", cities: "Aracaju, Itabaiana, Itabaianinha, Lagarto, Laranjeiras, Nossa Senhora da Glória, Nossa Senhora do Socorro" }
+]
+,
   company: {
     address: "Via Urbana, s/n - CIA Sul\nSimões Filho - BA, 43721-450",
     phone: "(71) 4117-1717",

@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useContent } from "@/contexts/ContentContext";
 import { useIsMobile } from "@/hooks/use-mobile";
 import heroBgImg from "@/assets/hero.png";
+import heroMobileBgImg from "@/assets/hero-mobile.png";
 
 export function HeroSection() {
   const { content } = useContent();
@@ -15,9 +16,9 @@ export function HeroSection() {
     ? hero.backgroundImage 
     : heroBgImg;
 
-  // Verifica se existe uma imagem específica para mobile (preparado para futuro update no Admin/Context)
-  // Se não houver, usa a imagem de desktop como fallback
-  const mobileImage = hero.mobileBackgroundImage || desktopImage;
+  // Tenta usar a imagem mobile do banco. Se não existir (dados antigos), usa o asset local mobile.
+  // Só usa a desktop como último recurso.
+  const mobileImage = hero.mobileBackgroundImage || heroMobileBgImg;
   const backgroundImage = isMobile ? mobileImage : desktopImage;
 
   return (
