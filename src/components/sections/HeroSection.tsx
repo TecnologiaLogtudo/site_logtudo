@@ -28,7 +28,7 @@ export function HeroSection() {
         className="absolute inset-0 bg-cover bg-no-repeat transition-all duration-500"
         style={{ 
           backgroundImage: `url(${backgroundImage})`,
-          backgroundPosition: isMobile ? 'center top' : 'center center'
+          backgroundPosition: isMobile ? 'center top' : 'center bottom'
         }}
       >
         <div className="absolute inset-0 hero-gradient" style={{ opacity: hero.overlayOpacity || 0.3 }} />
