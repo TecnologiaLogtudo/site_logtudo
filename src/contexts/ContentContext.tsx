@@ -3,6 +3,7 @@ import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 // Importações de imagens padrão
 import heroBgImg from "@/assets/hero.png";
+import heroMobileBgImg from "@/assets/hero-mobile.png";
 import logoCliente1 from "@/assets/logo-dpa-brasil.png";
 import logoCliente2 from "@/assets/logo-Latam.png";
 import logoCliente3 from "@/assets/Logo-lactalis.webp";
@@ -19,6 +20,7 @@ export interface HeroData {
   headlinePart2: string;
   stats: { value: string; label: string; delay: string }[];
   backgroundImage: string;
+  mobileBackgroundImage?: string;
   overlayOpacity?: string;
 }
 
@@ -76,9 +78,10 @@ const defaultState: ContentState = {
     stats: [
       { value: "98,5%", label: "SLA de Entrega", delay: "0.4s" },
       { value: "+200", label: "Cidades Atendidas", delay: "0.5s" },
-      { value: "+2M", label: "Entregas/Mês", delay: "0.6s" },
+      { value: "+55k", label: "Entregas/Mês", delay: "0.6s" },
     ],
     backgroundImage: heroBgImg,
+    mobileBackgroundImage: heroMobileBgImg,
     overlayOpacity: "0.3",
   },
   solutions: [
@@ -109,9 +112,8 @@ const defaultState: ContentState = {
   ],
   clients: {
     stats: [
-      { value: "+150", label: "Clientes Ativos" },
       { value: "12+", label: "Anos de Mercado" },
-      { value: "+2M", label: "Entregas/Mês" },
+      { value: "+55k", label: "Entregas/Mês" },
       { value: "98,5%", label: "SLA Médio" },
     ],
     testimonials: [
@@ -145,7 +147,7 @@ const defaultState: ContentState = {
     phoneLink: "+557141171717",
     email: "contato@logtudo.com.br",
     hours: "Segunda a Sexta: 08h às 17h",
-    whatsapp: "557199230093",
+    whatsapp: "557141171717",
     whatsappMessage: "Olá, gostaria de mais informações sobre as soluções logísticas da Logtudo"
   }
 };

@@ -130,8 +130,8 @@ export function ClientsSection() {
           
           <Carousel
             plugins={[plugin.current]}
-            onMouseEnter={plugin.current.stop}
-            onMouseLeave={plugin.current.play}
+            onMouseEnter={() => plugin.current.stop()}
+            onMouseLeave={() => plugin.current.play()}
             className="w-full"
             opts={{
               align: "start",
@@ -149,7 +149,7 @@ export function ClientsSection() {
                 <CarouselItem key={client.name} className="pl-4 basis-1/2 md:basis-1/3 lg:basis-1/4 xl:basis-1/5">
                   <div
                     className={cn(
-                      "h-24 md:h-32 flex items-center justify-center transition-all duration-500 hover:scale-110",
+                      "group h-24 md:h-32 flex items-center justify-center transition-all duration-500 hover:scale-110",
                       logosVisible 
                         ? "opacity-100 translate-y-0" 
                         : "opacity-0 translate-y-4"
@@ -160,7 +160,7 @@ export function ClientsSection() {
                       <img 
                         src={client.logo} 
                         alt={client.name} 
-                        className="h-full w-auto max-w-[150px] object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300 pointer-events-none select-none" 
+                        className="h-full w-auto max-w-[150px] object-contain grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none select-none" 
                       />
                     ) : (
                       <span className="text-lg font-medium text-muted-foreground whitespace-nowrap px-4 select-none">

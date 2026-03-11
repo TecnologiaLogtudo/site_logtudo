@@ -247,6 +247,27 @@ export default function Admin() {
                     <p className="text-xs text-muted-foreground">Cole uma URL ou selecione um arquivo do seu computador.</p>
                   </div>
                   <div className="space-y-2">
+                    <Label>Imagem Mobile (Vertical - 1080x1920) - Opcional</Label>
+                    <div className="flex gap-2">
+                      <Input 
+                        value={(heroForm as any).mobileBackgroundImage || ''} 
+                        onChange={(e) => setHeroForm({...heroForm, mobileBackgroundImage: e.target.value} as any)} 
+                        placeholder="URL da imagem mobile"
+                      />
+                      <div className="relative">
+                        <Button variant="outline" type="button" className="cursor-pointer">
+                          Upload
+                          <input 
+                            type="file" 
+                            className="absolute inset-0 opacity-0 cursor-pointer" 
+                            accept="image/*"
+                            onChange={(e) => handleImageUpload(e, (b64) => setHeroForm({...heroForm, mobileBackgroundImage: b64} as any))}
+                          />
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="space-y-2">
                     <Label>Opacidade da Película (0.0 a 1.0)</Label>
                     <Input 
                       type="number"

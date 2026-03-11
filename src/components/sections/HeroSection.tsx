@@ -2,23 +2,33 @@ import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useContent } from "@/contexts/ContentContext";
+import { useIsMobile } from "@/hooks/use-mobile";
 import heroBgImg from "@/assets/hero.png";
 
 export function HeroSection() {
   const { content } = useContent();
   const { hero } = content;
+  const isMobile = useIsMobile();
 
   // Usa a imagem do banco se existir e for uma URL/Base64 válida, caso contrário usa a local
-  const backgroundImage = hero.backgroundImage && (hero.backgroundImage.startsWith('http') || hero.backgroundImage.startsWith('data:image')) 
+  const desktopImage = hero.backgroundImage && (hero.backgroundImage.startsWith('http') || hero.backgroundImage.startsWith('data:image')) 
     ? hero.backgroundImage 
     : heroBgImg;
+
+  // Verifica se existe uma imagem específica para mobile (preparado para futuro update no Admin/Context)
+  // Se não houver, usa a imagem de desktop como fallback
+  const mobileImage = hero.mobileBackgroundImage || desktopImage;
+  const backgroundImage = isMobile ? mobileImage : desktopImage;
 
   return (
     <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
       {/* Background Image */}
       <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: `url(${backgroundImage})` }}
+        className="absolute inset-0 bg-cover bg-no-repeat transition-all duration-500"
+        style={{ 
+          backgroundImage: `url(${backgroundImage})`,
+          backgroundPosition: isMobile ? 'center top' : 'center center'
+        }}
       >
         <div className="absolute inset-0 hero-gradient" style={{ opacity: hero.overlayOpacity || 0.3 }} />
       </div>
