@@ -148,26 +148,71 @@ const defaultState: ContentState = {
     ]
   },
   coverage: [
-  { state: "AC", cities: "Rio Branco" },
-  { state: "AL", cities: "Maceió, Rio Largo" },
-  { state: "AP", cities: "Macapá" },
-  { state: "BA (Matriz)", cities: "Alagoinhas, Amargosa, Bom Jesus da Lapa, Cachoeira, Camaçari, Candeias, Catu, Conceição do Coité, Cruz das Almas, Dias d'Ávila, Entre Rios, Euclides da Cunha, Feira de Santana, Guanambi, Ilhéus, Irecê, Itabuna, Jacobina, Juazeiro, Lauro de Freitas, Madre de Deus, Mata de São João, Paripiranga, Paulo Afonso, Pojuca, Porto Seguro, Salvador, Santo Amaro, São Francisco do Conde, São Sebastião do Passé, Serrinha, Simões Filho, Teixeira de Freitas, Vera Cruz, Vitória da Conquista" },
-  { state: "CEARÁ", cities: "Fortaleza" },
-  { state: "DF", cities: "Brasília" },
-  { state: "ES", cities: "Serra, Vitória" },
-  { state: "MA", cities: "Imperatriz, São Luís, São Luís Gonzaga do Maranhão" },
-  { state: "MS", cities: "Campo Grande" },
-  { state: "MT", cities: "Lucas do Rio Verde, Várzea Grande" },
-  { state: "PA", cities: "Belém" },
-  { state: "PB", cities: "Bayeux, Campina Grande, João Pessoa" },
-  { state: "PE", cities: "Abreu e Lima, Aliança, Buenos Aires, Cabo de Santo Agostinho, Camaragibe, Carpina, Caruaru, Catende, Escada, Garanhuns, Goiana, Igarassu, Jaboatão dos Guararapes, Moreno, Olinda, Palmares, Paulista, Petrolina, Recife, Ribeirão, São Lourenço da Mata, Serra Talhada, Sirinhaém, Vicência" },
-  { state: "PI", cities: "Teresina" },
-  { state: "RN", cities: "Mossoró, Natal, Parnamirim" },
-  { state: "RO", cities: "Porto Velho" },
-  { state: "RR", cities: "Boa Vista" },
-  { state: "RS", cities: "Porto Alegre, Santana do Livramento" },
-  { state: "SE", cities: "Aracaju, Itabaiana, Itabaianinha, Lagarto, Laranjeiras, Nossa Senhora da Glória, Nossa Senhora do Socorro" }
+  { "state": "AL",
+    "cities": "Maceió, Rio Largo, Messias, Satuba"
+  },
+  {
+    "state": "BA",
+    "cities": "Salvador, Simões Filho, Camaçari, Lauro de Freitas, Vitória da Conquista, Porto Seguro, Ilhéus"
+  },
+  {
+    "state": "CE",
+    "cities": "Fortaleza, Caucaia, Maracanaú, Aquiraz, Eusébio"
+  },
+  {
+    "state": "ES",
+    "cities": "Vitória, Vila Velha, Serra, Cariacica, Viana, Guarapari"
+  },
+  {
+    "state": "GO",
+    "cities": "Goiania, Cristalina, Luziania, Cidade Ocidental, Novo Gama"
+  },
+  {
+    "state": "MA",
+    "cities": "Imperatriz"
+  },
+  {
+    "state": "MS",
+    "cities": "Campo Grande"
+  },
+  {
+    "state": "MT",
+    "cities": "Cuiabá, Varzea Grande, Lucas do Rio Verde"
+  },
+  {
+    "state": "PA",
+    "cities": "Belém"
+  },
+  {
+    "state": "PB",
+    "cities": "João Pessoa, Conde, Mangueira, Cabeceio, Bayeux, Santa Rita"
+  },
+  {
+    "state": "PI",
+    "cities": "Teresina"
+  },
+  {
+    "state": "PR",
+    "cities": "Foz do Iguaçu"
+  },
+  {
+    "state": "RN",
+    "cities": "Natal"
+  },
+  {
+    "state": "RS",
+    "cities": "Porto Alegre, Caxias do Sul, Esteio, Canoa, Sapucaia do Sul, Santana do Livramento"
+  },
+  {
+    "state": "SE",
+    "cities": "Aracaju, Nossa Senhora do Socorro, São Cristovão, Laranjeiras, Barra dos Coqueiros"
+  },
+  {
+    "state": "SP",
+    "cities": "São José dos Campos"
+  }
 ]
+
 ,
   company: {
     address: "Via Urbana, s/n - CIA Sul\nSimões Filho - BA, 43721-450",
