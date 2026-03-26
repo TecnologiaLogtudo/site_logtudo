@@ -1,0 +1,298 @@
+import { useState } from "react";
+import { useEffect } from "react";
+import { Header } from "@/components/layout/Header";
+import { Footer } from "@/components/layout/Footer";
+import { WhatsAppFloat } from "@/components/WhatsAppFloat";
+import { LocationSection } from "@/components/sections/LocationSection";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Phone, Mail, MapPin, Send, CheckCircle } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
+import { useContent } from "@/contexts/ContentContext";
+
+export default function Contato() {
+  const { content } = useContent();
+  const { company } = content;
+
+  const { toast } = useToast();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  useEffect(() => {
+    // Rola para o topo da página quando o componente é montado
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth" // Para rolagem suave
+    });
+  }, []);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    
+    const formData = new FormData(e.currentTarget);
+    const data = Object.fromEntries(formData.entries());
+
+    try {
+      // Envio para o FormSubmit.co
+      const response = await fetch(`https://formsubmit.co/ajax/${company.email}`, {
+        method: "POST",
+        headers: { 
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          ...data,
+          _subject: `Nova Cotação Logtudo: ${data.name}`, // Assunto do email
+          _template: "table", // Formato dos dados no email
+          _captcha: "false"
+        })
+      });
+
+      if (!response.ok) throw new Error("Falha no envio");
+
+      setIsSubmitting(false);
+      setIsSubmitted(true);
+      toast({
+        title: "Solicitação enviada!",
+        description: "Nossa equipe entrará em contato em até 48 horas.",
+      });
+    } catch (error) {
+      console.error(error);
+      setIsSubmitting(false);
+      toast({
+        title: "Erro ao enviar",
+        description: "Houve um problema ao enviar sua solicitação. Por favor, tente novamente ou contate-nos pelo WhatsApp.",
+        variant: "destructive"
+      });
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-background">
+      <Header />
+      <main className="pt-20 md:pt-24">
+        {/* Hero */}
+        <section className="hero-gradient py-16 md:py-24">
+          <div className="container-tight">
+            <div className="max-w-2xl">
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-primary-foreground mb-4">
+                Solicite uma Cotação
+              </h1>
+              <p className="text-lg text-primary-foreground/80">
+                Preencha o formulário e receba uma proposta personalizada 
+                para sua operação logística em até 48 horas.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Form Section */}
+        <section className="section-padding">
+          <div className="container-tight">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+              {/* Form */}
+              <div className="lg:col-span-2">
+                {isSubmitted ? (
+                  <div className="bg-card rounded-xl p-8 md:p-12 shadow-card text-center">
+                    <div className="w-16 h-16 rounded-full bg-[hsl(142,70%,45%)]/10 flex items-center justify-center mx-auto mb-6">
+                      <CheckCircle className="h-8 w-8 text-[hsl(142,70%,45%)]" />
+                    </div>
+                    <h2 className="text-2xl font-bold text-foreground mb-4">
+                      Solicitação Enviada!
+                    </h2>
+                    <p className="text-muted-foreground mb-6">
+                      Recebemos sua solicitação e nossa equipe comercial entrará 
+                      em contato em até 48 horas úteis.
+                    </p>
+                    <Button onClick={() => setIsSubmitted(false)}>
+                      Enviar Nova Solicitação
+                    </Button>
+                  </div>
+                ) : (
+                  <form onSubmit={handleSubmit} className="bg-card rounded-xl p-8 md:p-12 shadow-card">
+                    <h2 className="text-xl font-semibold text-foreground mb-6">
+                      Informações da Solicitação
+                    </h2>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                      <div className="space-y-2">
+                        <Label htmlFor="name">Nome *</Label>
+                        <Input id="name" name="name" required placeholder="Seu nome" />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="company">Empresa *</Label>
+                        <Input id="company" name="company" required placeholder="Nome da empresa" />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="email">E-mail Corporativo *</Label>
+                        <Input id="email" name="email" type="email" required placeholder="email@empresa.com" />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="phone">Telefone *</Label>
+                        <Input id="phone" name="phone" type="tel" required placeholder="(11) 99999-9999" />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="cargo">Cargo</Label>
+                        <Input id="cargo" name="cargo" placeholder="Seu cargo" />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="segment">Segmento</Label>
+                        <Select name="segment">
+                          <SelectTrigger>
+                            <SelectValue placeholder="Selecione" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="ecommerce">E-commerce</SelectItem>
+                            <SelectItem value="industria">Indústria</SelectItem>
+                            <SelectItem value="varejo">Varejo</SelectItem>
+                            <SelectItem value="marketplace">Marketplace</SelectItem>
+                            <SelectItem value="distribuidora">Distribuidora</SelectItem>
+                            <SelectItem value="farma">Farma & Saúde</SelectItem>
+                            <SelectItem value="outro">Outro</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                    </div>
+
+                    <div className="space-y-6 mb-6">
+                      <div className="space-y-2">
+                        <Label htmlFor="service">Tipo de Serviço</Label>
+                        <Select name="service">
+                          <SelectTrigger>
+                            <SelectValue placeholder="Selecione o serviço desejado" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="middle-mile">Middle Mile</SelectItem>
+                            <SelectItem value="last-mile">Last Mile</SelectItem>
+                            <SelectItem value="distribuicao">Distribuição Urbana</SelectItem>
+                            <SelectItem value="dedicada">Operação Dedicada</SelectItem>
+                            <SelectItem value="personalizada">Solução Personalizada</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div className="space-y-2">
+                          <Label htmlFor="volume">Volume Estimado (entregas/mês)</Label>
+                          <Select name="volume">
+                            <SelectTrigger>
+                              <SelectValue placeholder="Selecione" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="ate-1000">Até 1.000</SelectItem>
+                              <SelectItem value="1000-5000">1.000 - 5.000</SelectItem>
+                              <SelectItem value="5000-20000">5.000 - 20.000</SelectItem>
+                              <SelectItem value="20000-50000">20.000 - 50.000</SelectItem>
+                              <SelectItem value="50000-100000">50.000 - 100.000</SelectItem>
+                              <SelectItem value="acima-100000">Acima de 100.000</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+                        <div className="space-y-2">
+                          <Label htmlFor="regions">Regiões de Atuação</Label>
+                          <Input id="regions" name="regions" placeholder="Ex: SP, RJ, MG" />
+                        </div>
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label htmlFor="message">Detalhes da Operação</Label>
+                        <Textarea 
+                          id="message" 
+                          name="message"
+                          rows={4} 
+                          placeholder="Descreva sua necessidade, tipo de produto, prazos, etc."
+                        />
+                      </div>
+                    </div>
+
+                    <Button type="submit" size="lg" className="w-full md:w-auto" disabled={isSubmitting}>
+                      {isSubmitting ? (
+                        "Enviando..."
+                      ) : (
+                        <>
+                          <Send className="h-4 w-4 mr-2" />
+                          Solicitar Cotação
+                        </>
+                      )}
+                    </Button>
+                  </form>
+                )}
+              </div>
+
+              {/* Contact Info */}
+              <div className="space-y-8">
+                <div>
+                  <h3 className="text-lg font-semibold text-foreground mb-4">
+                    Fale Conosco
+                  </h3>
+                  <div className="space-y-4">
+                    <div className="flex items-start gap-4">
+                      <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                        <Phone className="h-5 w-5 text-primary" />
+                      </div>
+                      <div>
+                        <p className="font-medium text-foreground">Telefone</p>
+                        <a href={`tel:${company.phoneLink}`} className="text-muted-foreground hover:text-primary transition-colors">
+                          {company.phone}
+                        </a>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-4">
+                      <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                        <Mail className="h-5 w-5 text-primary" />
+                      </div>
+                      <div>
+                        <p className="font-medium text-foreground">E-mail</p>
+                        <a href={`mailto:${company.email}`} className="text-muted-foreground hover:text-primary transition-colors">
+                          {company.email}
+                        </a>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-4">
+                      <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                        <MapPin className="h-5 w-5 text-primary" />
+                      </div>
+                      <div>
+                        <p className="font-medium text-foreground">Endereço</p>
+                        <p className="text-muted-foreground whitespace-pre-line">
+                          {company.address}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="p-6 rounded-xl bg-secondary/50 border border-border">
+                  <h4 className="font-semibold text-foreground mb-2">
+                    Resposta Rápida
+                  </h4>
+                  <p className="text-sm text-muted-foreground mb-4">
+                    Nossa equipe comercial responde todas as solicitações 
+                    em até 48 horas úteis.
+                  </p>
+                  <Button variant="whatsapp" className="w-full" asChild>
+                    <a 
+                      href={`https://wa.me/${company.whatsapp}?text=Olá, gostaria de uma cotação`}
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                    >
+                      Chamar no WhatsApp
+                    </a>
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <LocationSection />
+      </main>
+      <Footer />
+      <WhatsAppFloat />
+    </div>
+  );
+}

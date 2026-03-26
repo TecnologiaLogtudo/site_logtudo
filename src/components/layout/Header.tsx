@@ -2,7 +2,7 @@ import { useState, type MouseEvent } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import logoLogtudo from "@/assets/logo_logtudo.png";
+import logoLogtudo from "@/assets/logo_header.png";
 
 const navigation = [
   { name: "Soluções", href: "/#solucoes" },
@@ -32,13 +32,13 @@ export function Header() {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-md border-b border-border">
-      <nav className="container-tight flex items-center justify-between h-16 md:h-20">
+      <nav className="container-tight flex items-center justify-between h-20 md:h-24">
         {/* Logo */}
         <Link to="/" className="flex-shrink-0">
           <img
             src={logoLogtudo}
             alt="Logtudo - Soluções Logísticas"
-            className="h-12 md:h-14 w-auto"
+            className="h-16 md:h-20 w-auto"
           />
         </Link>
 

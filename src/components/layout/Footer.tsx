@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { MapPin, Phone, Mail, Linkedin, Instagram } from "lucide-react";
-import logoLogtudo from "@/assets/logo_logtudo.png";
+import logoLogtudo from "@/assets/logo_footer.png";
 import { useContent } from "@/contexts/ContentContext";
 
 const footerLinks = {
@@ -30,7 +30,7 @@ export function Footer() {
             <img
               src={logoLogtudo}
               alt="Logtudo"
-              className="h-12 w-auto mb-6"
+              className="h-20 md:h-24 w-auto mb-6"
             />
             <p className="text-background/70 text-sm leading-relaxed mb-6 max-w-sm">
               Soluções logísticas de alta performance para operações B2B. 

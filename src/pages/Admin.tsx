@@ -16,7 +16,7 @@ import { Trash2, Plus } from "lucide-react";
 export default function Admin() {
   const { content, updateContent } = useContent();
   const { toast } = useToast();
-  
+
   // Estados locais para formulários
   const [heroForm, setHeroForm] = useState(content.hero);
   const [companyForm, setCompanyForm] = useState(content.company);
@@ -34,7 +34,7 @@ export default function Admin() {
   }, [content]);
 
   const handleSave = (section: string) => {
-    switch(section) {
+    switch (section) {
       case 'hero':
         updateContent("hero", heroForm);
         break;
@@ -198,7 +198,7 @@ export default function Admin() {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      <main className="pt-24 pb-16 container-tight">
+      <main className="pt-20 md:pt-24 pb-16 container-tight">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-3xl font-bold">Painel Administrativo</h1>
           <Button variant="outline" onClick={() => window.location.href = "/"}>Ver Site</Button>
