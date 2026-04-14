@@ -4,12 +4,11 @@ services:
   # Database
   db:
     image: postgres:16-alpine
-    container_name: logtudo-db
     restart: always
     environment:
       POSTGRES_USER: ${DB_USER:-postgres}
       POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
-      POSTGRES_DB: ${DB_NAME:-site_logtudo_db}
+      POSTGRES_DB: ${DB_NAME:-site_logtudo_dev-db}
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
@@ -23,10 +22,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: logtudo-app
     restart: always
     environment:
-      DATABASE_URL: postgresql://${DB_USER:-postgres}:${DB_PASSWORD:-postgres}@db:5432/${DB_NAME:-site_logtudo_db}
+      DATABASE_URL: postgresql://${DB_USER:-postgres}:${DB_PASSWORD:-postgres}@db:5432/${DB_NAME:-site_logtudo_dev-db}
     depends_on:
       db:
         condition: service_healthy
@@ -35,13 +33,13 @@ services:
     labels:
       - traefik.enable=true
       - traefik.http.middlewares.force-https.redirectscheme.scheme=https
-      - traefik.http.routers.logtudo-app-http.rule=Host(`s8oswow8wcgsosc040w8swsk.72.61.25.133.sslip.io`)
-      - traefik.http.routers.logtudo-app-http.entrypoints=http
-      - traefik.http.routers.logtudo-app-http.middlewares=force-https
-      - traefik.http.routers.logtudo-app.rule=Host(`s8oswow8wcgsosc040w8swsk.72.61.25.133.sslip.io`)
-      - traefik.http.routers.logtudo-app.entrypoints=https
-      - traefik.http.routers.logtudo-app.tls=true
-      - traefik.http.services.logtudo-app.loadbalancer.server.port=3000
+      - traefik.http.routers.logtudo-dev-app-http.rule=Host(`s8oswow8wcgsosc040w8swsk.72.61.25.133.sslip.io`)
+      - traefik.http.routers.logtudo-dev-app-http.entrypoints=http
+      - traefik.http.routers.logtudo-dev-app-http.middlewares=force-https
+      - traefik.http.routers.logtudo-dev-app.rule=Host(`s8oswow8wcgsosc040w8swsk.72.61.25.133.sslip.io`)
+      - traefik.http.routers.logtudo-dev-app.entrypoints=https
+      - traefik.http.routers.logtudo-dev-app.tls=true
+      - traefik.http.services.logtudo-dev-app.loadbalancer.server.port=3000
       - coolify.managed=true
       - coolify.proxy=true
     healthcheck:
