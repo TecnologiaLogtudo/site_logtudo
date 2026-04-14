@@ -10,6 +10,7 @@ import TermsOfUse from "./pages/TermsOfUse";
 import Sobre from "./pages/Sobre";
 import NotFound from "./pages/NotFound";
 import Admin from "./pages/Admin";
+import SejaParceiro from "./pages/SejaParceiro";
 import { ContentProvider } from "@/contexts/ContentContext";
 
 const queryClient = new QueryClient();
@@ -27,6 +28,7 @@ const App = () => (
             <Route path="/politica-de-privacidade" element={<PrivacyPolicy />} />
             <Route path="/termos-de-uso" element={<TermsOfUse />} />
             <Route path="/sobre" element={<Sobre />} />
+            <Route path="/seja-parceiro" element={<SejaParceiro />} />
             <Route path="/admin" element={<Admin />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />

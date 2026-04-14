@@ -12,7 +12,7 @@ const footerLinks = {
   ],
   contato: [
     { name: "Solicitar Cotação", href: "/contato" },
-    { name: "Seja Parceiro", href: "/contato#parceiro" },
+    { name: "Seja Parceiro", href: "/seja-parceiro" },
     { name: "Trabalhe Conosco", href: "/contato#carreiras" },
   ],
 };

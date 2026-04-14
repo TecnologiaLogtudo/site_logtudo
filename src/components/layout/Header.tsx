@@ -9,6 +9,7 @@ const navigation = [
   { name: "Diferenciais", href: "/#diferenciais" },
   { name: "Como Funciona", href: "/#como-funciona" },
   { name: "Segmentos", href: "/#segmentos" },
+  { name: "Seja Parceiro", href: "/seja-parceiro" },
   { name: "Sobre", href: "/sobre" },
 ];
 
