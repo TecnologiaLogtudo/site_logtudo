@@ -35,10 +35,10 @@ services:
     labels:
       - traefik.enable=true
       - traefik.http.middlewares.force-https.redirectscheme.scheme=https
-      - traefik.http.routers.logtudo-app-http.rule=Host(`r888o84w0kw48w4088go0scc.72.61.25.133.sslip.io`)
+      - traefik.http.routers.logtudo-app-http.rule=Host(`s8oswow8wcgsosc040w8swsk.72.61.25.133.sslip.io`)
       - traefik.http.routers.logtudo-app-http.entrypoints=http
       - traefik.http.routers.logtudo-app-http.middlewares=force-https
-      - traefik.http.routers.logtudo-app.rule=Host(`r888o84w0kw48w4088go0scc.72.61.25.133.sslip.io`)
+      - traefik.http.routers.logtudo-app.rule=Host(`s8oswow8wcgsosc040w8swsk.72.61.25.133.sslip.io`)
       - traefik.http.routers.logtudo-app.entrypoints=https
       - traefik.http.routers.logtudo-app.tls=true
       - traefik.http.services.logtudo-app.loadbalancer.server.port=3000
