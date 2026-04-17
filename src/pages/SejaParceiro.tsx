@@ -448,11 +448,12 @@ export default function SejaParceiro() {
                           <SelectValue placeholder="Selecione" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="moto">Moto</SelectItem>
+                          <SelectItem value="HR">HR</SelectItem>
                           <SelectItem value="utilitario">Utilitário</SelectItem>
-                          <SelectItem value="van">Van</SelectItem>
-                          <SelectItem value="vuc">VUC</SelectItem>
+                          <SelectItem value="fiorino">Fiorino</SelectItem>
+                          <SelectItem value="toco">Toco</SelectItem>
                           <SelectItem value="tres-quartos">3/4</SelectItem>
+                          <SelectItem value="truck">Truck</SelectItem>
                           <SelectItem value="outro">Outro</SelectItem>
                         </SelectContent>
                       </Select>
