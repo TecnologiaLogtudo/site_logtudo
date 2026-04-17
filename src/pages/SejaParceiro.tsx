@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useMemo, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { WhatsAppFloat } from "@/components/WhatsAppFloat";
@@ -12,9 +12,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Phone, Mail, MapPin, Send, CheckCircle } from "lucide-react";
 import "./SejaParceiro.css";
 
-type ProfileType = "motoristas" | "empresas";
-type FormType = "driver" | "client";
-
 type FaqItem = {
   question: string;
   answer: string;
@@ -22,24 +19,24 @@ type FaqItem = {
 
 const faqItems: FaqItem[] = [
   {
-    question: "Que tipo de parceiro pode se cadastrar?",
+    question: "Quem pode se cadastrar como motorista parceiro?",
     answer:
-      "Motoristas parceiros, agregados com veículos leves ou utilitários, operadores com frota e empresas que desejam contratar uma operação logística B2B podem usar esta página como porta de entrada.",
+      "Motoristas autônomos, agregados e operadores com veículo próprio podem se cadastrar para análise e direcionamento operacional.",
   },
   {
-    question: "A página serve apenas para motoristas?",
+    question: "Quais dados são necessários para o cadastro?",
     answer:
-      "Não. Ela foi desenhada para captar tanto motoristas e agregados quanto empresas que precisam de apoio logístico, com mensagem e formulário adaptados para cada público.",
+      "Solicitamos nome, telefone, CPF/CNPJ, ANTT, RNTRC, placa do veículo, cidade, tipo de veículo, experiência e rota de interesse.",
   },
   {
-    question: "Quais informações ajudam a qualificar melhor o lead?",
+    question: "O que acontece depois do envio?",
     answer:
-      "Para motoristas, cidade, veículo, tipo de operação e disponibilidade. Para empresas, volume, segmento, região, modelo logístico e prazo desejado para início.",
+      "Nossa equipe faz a triagem do perfil, valida os dados e retorna com o direcionamento para as próximas etapas de ativação.",
   },
   {
-    question: "Como o visitante continua após preencher?",
+    question: "Em quanto tempo recebo retorno?",
     answer:
-      "A proposta da página já prepara o próximo passo: triagem operacional, validação comercial, contato via WhatsApp ou abertura de conversa para piloto e operação dedicada.",
+      "A equipe de cadastro responde em até 48 horas úteis, podendo variar conforme volume de solicitações.",
   },
 ];
 
@@ -48,8 +45,6 @@ export default function SejaParceiro() {
   const { content } = useContent();
   const { company } = content;
 
-  const [profile, setProfile] = useState<ProfileType>("motoristas");
-  const [formType, setFormType] = useState<FormType>("driver");
   const [openFaq, setOpenFaq] = useState<number>(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -61,13 +56,8 @@ export default function SejaParceiro() {
     });
   }, []);
 
-  const whatsappLeadText = useMemo(
-    () =>
-      formType === "driver"
-        ? "Olá, vim da página Seja Parceiro e quero me cadastrar como motorista/agregado."
-        : "Olá, vim da página Seja Parceiro e quero solicitar uma operação logística para minha empresa.",
-    [formType]
-  );
+  const whatsappLeadText =
+    "Olá, vim da página Seja Parceiro e quero me cadastrar como motorista/agregado.";
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -78,11 +68,8 @@ export default function SejaParceiro() {
 
     const payload = {
       ...data,
-      partner_type: formType === "driver" ? "Motorista/Agregado" : "Empresa/Cliente",
-      _subject:
-        formType === "driver"
-          ? `Novo cadastro de parceiro Logtudo: ${String(data.nome || "")}`
-          : `Nova solicitação empresa Logtudo: ${String(data.empresa || "")}`,
+      partner_type: "Motorista/Agregado",
+      _subject: `Novo cadastro de parceiro Logtudo: ${String(data.nome || "")}`,
       _template: "table",
       _captcha: "false",
     };
@@ -119,11 +106,7 @@ export default function SejaParceiro() {
     }
   };
 
-  const isDriver = formType === "driver";
-  const goToCadastro = (nextForm: FormType, nextProfile: ProfileType) => {
-    setFormType(nextForm);
-    setProfile(nextProfile);
-
+  const goToCadastro = () => {
     const cadastro = document.getElementById("cadastro");
     if (cadastro) {
       cadastro.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -144,25 +127,20 @@ export default function SejaParceiro() {
           <div className="sp-container sp-hero-grid">
             <div>
               <span className="sp-eyebrow">Operações em todo o Brasil</span>
-              <h1>Seja parceiro de uma logística que cresce com previsibilidade.</h1>
+              <h1>Seja motorista parceiro de uma logística com demanda real.</h1>
               <p className="sp-lead">
-                Se você é motorista parceiro, agregado ou operador com frota, conecte seu veículo a
-                uma operação com suporte, processo e demanda real. Se sua empresa precisa escalar
-                entregas B2B, fale com uma estrutura preparada para SLA, capilaridade e performance.
+                Se você é motorista parceiro ou agregado, conecte seu veículo a uma operação com
+                suporte, processo e previsibilidade para crescer com segurança.
               </p>
 
               <div className="sp-hero-actions">
-                <Button type="button" size="lg" onClick={() => goToCadastro("driver", "motoristas")}>
-                  Quero ser motorista parceiro
-                </Button>
                 <Button
                   type="button"
                   size="lg"
-                  variant="outline"
-                  className="border-primary/30 text-primary hover:text-primary"
-                  onClick={() => goToCadastro("client", "empresas")}
+                  className="w-full sm:w-auto whitespace-normal text-center leading-tight h-auto py-3"
+                  onClick={goToCadastro}
                 >
-                  Quero contratar a Logtudo
+                  Quero me cadastrar como motorista
                 </Button>
               </div>
 
@@ -203,198 +181,142 @@ export default function SejaParceiro() {
                   <div>MA</div>
                 </div>
                 <div className="sp-tag-row">
-                  <span className="sp-tag">Middle Mile</span>
-                  <span className="sp-tag">Last Mile</span>
+                  <span className="sp-tag">Rotas urbanas</span>
+                  <span className="sp-tag">Transferências</span>
                   <span className="sp-tag">Distribuição Urbana</span>
                   <span className="sp-tag">Operações Dedicadas</span>
                 </div>
               </article>
-
             </div>
           </div>
         </section>
 
-        <section id="perfis">
+        <section id="perfis" className="sp-section-soft">
           <div className="sp-container">
             <div className="sp-section-head">
               <div>
-                <span className="sp-eyebrow">Escolha seu caminho</span>
-                <h2>Uma única página, dois caminhos.</h2>
+                <span className="sp-eyebrow">Para motoristas</span>
+                <h2>Uma jornada objetiva para começar a rodar.</h2>
               </div>
             </div>
 
-            <div className="sp-selector" role="tablist" aria-label="Perfis de parceria">
-              <button
-                type="button"
-                className={profile === "motoristas" ? "active" : ""}
-                role="tab"
-                aria-selected={profile === "motoristas"}
-                onClick={() => setProfile("motoristas")}
-              >
-                Sou motorista parceiro
-              </button>
-              <button
-                type="button"
-                className={profile === "empresas" ? "active" : ""}
-                role="tab"
-                aria-selected={profile === "empresas"}
-                onClick={() => setProfile("empresas")}
-              >
-                Sou empresa contratante
-              </button>
+            <div className="sp-audience-layout">
+              <article className="sp-audience-card">
+                <span className="sp-eyebrow">Cadastro direto</span>
+                <h3>Entre em uma operação séria, com suporte e oportunidades reais.</h3>
+                <p>
+                  Ideal para agregados e motoristas com utilitário, toco, 3/4, truck, Fiorino ou
+                  frota leve que buscam recorrência e organização operacional.
+                </p>
+                <div className="sp-chip-row">
+                  <span className="sp-chip">Rotas urbanas</span>
+                  <span className="sp-chip">Transferências</span>
+                  <span className="sp-chip">Operações dedicadas</span>
+                  <span className="sp-chip">Suporte operacional</span>
+                </div>
+              </article>
+              <article className="sp-audience-card">
+                <span className="sp-eyebrow">Etapas claras</span>
+                <h3>Cadastro, análise e direcionamento.</h3>
+                <p>
+                  Você informa dados de contato, documentos e perfil de veículo, e a equipe
+                  direciona sua entrada conforme a necessidade operacional da região.
+                </p>
+              </article>
             </div>
-
-            {profile === "motoristas" ? (
-              <div className="sp-panel">
-                <div className="sp-audience-layout">
-                  <article className="sp-audience-card">
-                    <span className="sp-eyebrow">Para motoristas</span>
-                    <h3>Entre em uma operação séria, com suporte e oportunidades reais.</h3>
-                    <p>
-                      Ideal para agregados, motoristas com utilitário, toco, 3/4, truck, Fiorino ou frota leve que
-                      buscam recorrência, acompanhamento operacional e entrada em uma rede logística
-                      organizada.
-                    </p>
-                    <div className="sp-chip-row">
-                      <span className="sp-chip">Rotas urbanas</span>
-                      <span className="sp-chip">Transferências</span>
-                      <span className="sp-chip">Operações dedicadas</span>
-                      <span className="sp-chip">Suporte operacional</span>
-                    </div>
-                  </article>
-                  <article className="sp-audience-card">
-                    <span className="sp-eyebrow">Etapas claras</span>
-                    <h3>Cadastro, análise e direcionamento.</h3>
-                    <p>
-                      O fluxo proposto reduz dúvidas: você informa cidade, tipo de veículo,
-                      experiência e região de interesse, e a equipe direciona sua entrada conforme a
-                      necessidade operacional.
-                    </p>
-                  </article>
-                </div>
-              </div>
-            ) : (
-              <div className="sp-panel">
-                <div className="sp-audience-layout">
-                  <article className="sp-audience-card">
-                    <span className="sp-eyebrow">Para empresas</span>
-                    <h3>Escalone sua operação com uma malha preparada para demanda B2B.</h3>
-                    <p>
-                      Empresas podem usar a página para iniciar conversas sobre distribuição urbana,
-                      middle mile, last mile ou operações dedicadas com desenho logístico,
-                      monitoramento e metas de performance.
-                    </p>
-                    <div className="sp-chip-row">
-                      <span className="sp-chip">Capilaridade regional</span>
-                      <span className="sp-chip">SLA contratual</span>
-                      <span className="sp-chip">Planejamento de malha</span>
-                      <span className="sp-chip">Escalabilidade</span>
-                    </div>
-                  </article>
-                  <article className="sp-audience-card">
-                    <span className="sp-eyebrow">Entrada consultiva</span>
-                    <h3>Lead mais qualificado desde o primeiro contato.</h3>
-                    <p>
-                      Em vez de cair em um contato genérico, o prospect informa volume, segmento,
-                      regiões e modelo de operação, o que acelera triagem comercial e proposta.
-                    </p>
-                  </article>
-                </div>
-              </div>
-            )}
           </div>
         </section>
 
-        <section>
+        <section className="sp-section-base">
           <div className="sp-container">
             <div className="sp-section-head">
               <div>
                 <span className="sp-eyebrow">Por que fazer parte</span>
-                <h2>Argumentos certos para cada perfil.</h2>
+                <h2>Vantagens para quem quer crescer na operação.</h2>
               </div>
             </div>
 
             <div className="sp-benefits-grid">
               <article className="sp-benefit-card">
                 <div className="sp-icon-pill">A</div>
-                <h3>Para motoristas</h3>
+                <h3>Demanda recorrente</h3>
                 <p>
-                  Posicione a Logtudo como uma rede confiável, com demanda organizada, comunicação
-                  operacional e possibilidade de atuação em diferentes modalidades.
+                  Atue com previsibilidade e constância em uma rede logística que opera com ritmo e
+                  planejamento.
                 </p>
               </article>
               <article className="sp-benefit-card">
                 <div className="sp-icon-pill">B</div>
-                <h3>Para agregados</h3>
+                <h3>Suporte operacional</h3>
                 <p>
-                  Destaque onboarding claro, análise rápida, oportunidades por região e melhor
-                  alinhamento entre perfil de veículo e necessidade da operação.
+                  Conte com acompanhamento da equipe para alinhamento de rotas, necessidades e
+                  performance.
                 </p>
               </article>
               <article className="sp-benefit-card">
                 <div className="sp-icon-pill">C</div>
-                <h3>Para empresas</h3>
+                <h3>Entrada estruturada</h3>
                 <p>
-                  Mostre cobertura, capacidade de absorver picos, desenho sob medida e integração
-                  entre frota, processo e acompanhamento de indicadores.
+                  Cadastro claro, análise rápida e direcionamento objetivo para ativação conforme o
+                  seu perfil.
                 </p>
               </article>
             </div>
           </div>
         </section>
 
-        <section className="sp-highlight-band">
+        <section className="sp-highlight-band sp-section-tint">
           <div className="sp-container">
             <div className="sp-section-head">
               <div>
                 <span className="sp-eyebrow">Como funciona</span>
-                <h2>Uma jornada simples e autoexplicativa.</h2>
+                <h2>Uma jornada simples para ativar seu cadastro.</h2>
               </div>
             </div>
 
             <div className="sp-steps-grid">
               <article className="sp-step">
                 <div className="sp-step-number">01</div>
-                <h3>Escolha o perfil</h3>
+                <h3>Preencha o cadastro</h3>
                 <p>
-                  Motorista parceiro, agregado ou empresa contratante. O conteúdo e o formulário se
-                  adaptam ao tipo de perfil.
+                  Informe seus dados de contato, documentação principal e perfil de atuação
+                  logística.
                 </p>
               </article>
               <article className="sp-step">
                 <div className="sp-step-number">02</div>
-                <h3>Informe os dados</h3>
+                <h3>Análise de perfil</h3>
                 <p>
-                  Preenchimento guiado com dados relevantes para operação, comercial ou análise de
-                  cadastro.
+                  A equipe valida as informações e verifica aderência da sua disponibilidade às
+                  rotas ativas.
                 </p>
               </article>
               <article className="sp-step">
                 <div className="sp-step-number">03</div>
-                <h3>Receba direcionamento</h3>
+                <h3>Contato de retorno</h3>
                 <p>
-                  A equipe identifica aderência por região, tipo de operação, volume e estrutura
-                  disponível.
+                  Você recebe orientação sobre próximos passos, requisitos complementares e início da
+                  operação.
                 </p>
               </article>
               <article className="sp-step">
                 <div className="sp-step-number">04</div>
-                <h3>Avance para ativação</h3>
+                <h3>Ativação operacional</h3>
                 <p>
-                  O próximo passo pode ser cadastro operacional, contato comercial, piloto logístico
-                  ou negociação de operação dedicada.
+                  Com o perfil aprovado, seguimos para integração e alinhamento de execução na
+                  malha disponível.
                 </p>
               </article>
             </div>
           </div>
         </section>
 
-        <section id="empresas">
+        <section id="operacao" className="sp-section-soft">
           <div className="sp-container">
             <div className="sp-section-head">
               <div>
                 <span className="sp-eyebrow">Prova operacional</span>
-                <h2>Números que sustentam a proposta de parceria.</h2>
+                <h2>Números que reforçam confiança para quem vai rodar.</h2>
               </div>
             </div>
 
@@ -403,39 +325,35 @@ export default function SejaParceiro() {
                 <span>Compromisso de performance</span>
                 <strong>98,5% SLA</strong>
                 <span>
-                  Proposta forte para clientes que precisam previsibilidade e também para parceiros
-                  que valorizam processo e organização.
+                  Organização operacional para reduzir falhas e manter previsibilidade no dia a dia.
                 </span>
               </article>
               <article className="sp-metric-tile">
                 <span>Capilaridade operacional</span>
                 <strong>+200 cidades</strong>
                 <span>
-                  Mostra amplitude de cobertura e espaço para conectar diferentes perfis de parceiros
-                  no Nordeste.
+                  Cobertura ampla para gerar oportunidades em diferentes regiões do Nordeste.
                 </span>
               </article>
               <article className="sp-metric-tile">
                 <span>Volume recorrente</span>
                 <strong>+55 mil entregas</strong>
                 <span>
-                  Ajuda a comunicar maturidade, ritmo operacional e capacidade de absorver demandas
-                  contínuas.
+                  Ritmo de operação que favorece recorrência e continuidade para parceiros ativos.
                 </span>
               </article>
               <article className="sp-metric-tile">
                 <span>Experiência acumulada</span>
                 <strong>12+ anos</strong>
                 <span>
-                  Reforça credibilidade institucional e reduz a sensação de risco na entrada de novos
-                  parceiros.
+                  Histórico de mercado que reforça segurança para quem busca parceria de longo prazo.
                 </span>
               </article>
             </div>
           </div>
         </section>
 
-        <section>
+        <section className="sp-section-base">
           <div className="sp-container">
             <div className="sp-section-head">
               <div>
@@ -466,37 +384,20 @@ export default function SejaParceiro() {
           </div>
         </section>
 
-        <section id="cadastro">
-          <div className="sp-container grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
+        <section id="cadastro" className="sp-section-soft">
+          <div className="sp-container grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-10 lg:gap-12 items-start">
             <div className="lg:col-span-2">
               <div className="sp-section-head sp-contact-head">
                 <div>
                   <span className="sp-eyebrow">Cadastro inteligente</span>
-                  <h2>Formulário dinâmico para captar motoristas e clientes.</h2>
+                  <h2>Formulário de cadastro para motorista parceiro.</h2>
                 </div>
-              </div>
-
-              <div className="sp-selector" role="tablist" aria-label="Tipo de formulário">
-                <button
-                  type="button"
-                  className={isDriver ? "active" : ""}
-                  onClick={() => setFormType("driver")}
-                >
-                  Motorista / Agregado
-                </button>
-                <button
-                  type="button"
-                  className={!isDriver ? "active" : ""}
-                  onClick={() => setFormType("client")}
-                >
-                  Empresa / Cliente
-                </button>
               </div>
             </div>
 
             <article className="lg:col-span-2">
               {isSubmitted ? (
-                <div className="bg-card rounded-xl p-8 md:p-12 shadow-card text-center">
+                <div className="bg-card rounded-xl p-5 sm:p-6 md:p-12 shadow-card text-center">
                   <div className="w-16 h-16 rounded-full bg-[hsl(142,70%,45%)]/10 flex items-center justify-center mx-auto mb-6">
                     <CheckCircle className="h-8 w-8 text-[hsl(142,70%,45%)]" />
                   </div>
@@ -508,31 +409,41 @@ export default function SejaParceiro() {
                   <Button onClick={() => setIsSubmitted(false)}>Enviar novo cadastro</Button>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} className="bg-card rounded-xl p-8 md:p-12 shadow-card">
-                  <h3 className="text-xl font-semibold text-foreground mb-6">Informações da Solicitação</h3>
+                <form onSubmit={handleSubmit} className="bg-card rounded-xl p-5 sm:p-6 md:p-12 shadow-card">
+                  <h3 className="text-xl font-semibold text-foreground mb-6">Informações do Motorista</h3>
 
-                  <div className={`grid grid-cols-1 md:grid-cols-2 gap-6 mb-6 ${!isDriver ? "sp-hidden" : ""}`}>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                     <div className="space-y-2">
                       <Label htmlFor="nome">Nome completo *</Label>
-                      <Input id="nome" name="nome" placeholder="Seu nome" required={isDriver} disabled={!isDriver} />
+                      <Input id="nome" name="nome" placeholder="Seu nome" required />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="telefone">Telefone / WhatsApp *</Label>
-                      <Input
-                        id="telefone"
-                        name="telefone"
-                        placeholder="(71) 99999-9999"
-                        required={isDriver}
-                        disabled={!isDriver}
-                      />
+                      <Input id="telefone" name="telefone" placeholder="(71) 99999-9999" required />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="cpf_cnpj">CPF/CNPJ *</Label>
+                      <Input id="cpf_cnpj" name="cpf_cnpj" placeholder="Informe seu CPF ou CNPJ" required />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="antt">ANTT *</Label>
+                      <Input id="antt" name="antt" placeholder="Número ANTT" required />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="rntrc">RNTRC *</Label>
+                      <Input id="rntrc" name="rntrc" placeholder="Número RNTRC" required />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="placa_veiculo">Placa do veículo *</Label>
+                      <Input id="placa_veiculo" name="placa_veiculo" placeholder="ABC1D23" required />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="cidade">Cidade / UF</Label>
-                      <Input id="cidade" name="cidade" placeholder="Simões Filho - BA" disabled={!isDriver} />
+                      <Input id="cidade" name="cidade" placeholder="Simões Filho - BA" />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="veiculo">Tipo de veículo</Label>
-                      <Select name="veiculo" disabled={!isDriver}>
+                      <Select name="veiculo">
                         <SelectTrigger id="veiculo">
                           <SelectValue placeholder="Selecione" />
                         </SelectTrigger>
@@ -548,7 +459,7 @@ export default function SejaParceiro() {
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="mei">Possui CNPJ / MEI?</Label>
-                      <Select name="mei" disabled={!isDriver}>
+                      <Select name="mei">
                         <SelectTrigger id="mei">
                           <SelectValue placeholder="Selecione" />
                         </SelectTrigger>
@@ -561,7 +472,7 @@ export default function SejaParceiro() {
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="experiencia">Experiência em logística</Label>
-                      <Select name="experiencia" disabled={!isDriver}>
+                      <Select name="experiencia">
                         <SelectTrigger id="experiencia">
                           <SelectValue placeholder="Selecione" />
                         </SelectTrigger>
@@ -579,93 +490,9 @@ export default function SejaParceiro() {
                         id="regiao"
                         name="regiao"
                         placeholder="Ex.: Salvador e RMS, interior da Bahia, rotas dedicadas..."
-                        disabled={!isDriver}
                       />
                     </div>
                   </div>
-
-                  <div className={`grid grid-cols-1 md:grid-cols-2 gap-6 mb-6 ${isDriver ? "sp-hidden" : ""}`}>
-                    <div className="space-y-2">
-                      <Label htmlFor="empresa">Empresa *</Label>
-                      <Input
-                        id="empresa"
-                        name="empresa"
-                        placeholder="Nome da empresa"
-                        required={!isDriver}
-                        disabled={isDriver}
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="contato">Pessoa responsável *</Label>
-                      <Input
-                        id="contato"
-                        name="contato"
-                        placeholder="Seu nome"
-                        required={!isDriver}
-                        disabled={isDriver}
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="email">E-mail corporativo *</Label>
-                      <Input
-                        id="email"
-                        name="email"
-                        placeholder="voce@empresa.com.br"
-                        type="email"
-                        required={!isDriver}
-                        disabled={isDriver}
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="volume">Volume mensal estimado</Label>
-                      <Input
-                        id="volume"
-                        name="volume"
-                        placeholder="Ex.: 8.000 entregas/mês"
-                        disabled={isDriver}
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="segmento">Segmento</Label>
-                      <Select name="segmento" disabled={isDriver}>
-                        <SelectTrigger id="segmento">
-                          <SelectValue placeholder="Selecione" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="ecommerce">E-commerce</SelectItem>
-                          <SelectItem value="industria">Indústria</SelectItem>
-                          <SelectItem value="varejo">Varejo</SelectItem>
-                          <SelectItem value="distribuidora">Distribuidora</SelectItem>
-                          <SelectItem value="farma">Farma & Saúde</SelectItem>
-                          <SelectItem value="outro">Outro</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="operacao">Modelo de operação</Label>
-                      <Select name="operacao" disabled={isDriver}>
-                        <SelectTrigger id="operacao">
-                          <SelectValue placeholder="Selecione" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="middle-mile">Middle Mile</SelectItem>
-                          <SelectItem value="last-mile">Last Mile</SelectItem>
-                          <SelectItem value="distribuicao-urbana">Distribuição Urbana</SelectItem>
-                          <SelectItem value="operacao-dedicada">Operação Dedicada</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                    <div className="space-y-2 md:col-span-2">
-                      <Label htmlFor="briefing">Regiões, prazo e contexto</Label>
-                      <Textarea
-                        id="briefing"
-                        name="briefing"
-                        placeholder="Conte rapidamente o que sua operação precisa."
-                        disabled={isDriver}
-                      />
-                    </div>
-                  </div>
-
 
                   <div className="sp-mini-actions">
                     <Button type="submit" size="lg" className="w-full md:w-auto" disabled={isSubmitting}>
@@ -740,11 +567,13 @@ export default function SejaParceiro() {
               <div className="p-6 rounded-xl bg-secondary/50 border border-border">
                 <h4 className="font-semibold text-foreground mb-2">Resposta Rápida</h4>
                 <p className="text-sm text-muted-foreground mb-4">
-                  Nossa equipe comercial responde todas as solicitações em até 48 horas úteis.
+                  Nossa equipe de cadastro responde todas as solicitações em até 48 horas úteis.
                 </p>
                 <Button variant="whatsapp" className="w-full" asChild>
                   <a
-                    href={`https://wa.me/${company.whatsapp}?text=Olá, gostaria de mais informações sobre parceria.`}
+                    href={`https://wa.me/${company.whatsapp}?text=${encodeURIComponent(
+                      "Olá, gostaria de mais informações sobre cadastro de motorista parceiro."
+                    )}`}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
