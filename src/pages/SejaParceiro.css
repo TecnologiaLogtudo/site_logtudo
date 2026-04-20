@@ -108,6 +108,18 @@
   padding: clamp(3.5rem, 7vw, 6rem) 0;
 }
 
+.sp-section-base {
+  background: transparent;
+}
+
+.sp-section-soft {
+  background: linear-gradient(180deg, hsl(var(--secondary) / 0.45), hsl(var(--background)));
+}
+
+.sp-section-tint {
+  background: linear-gradient(135deg, hsl(var(--primary) / 0.1), hsl(var(--background)));
+}
+
 .sp-skip-link {
   position: absolute;
   left: -999px;
@@ -154,6 +166,7 @@
   color: var(--sp-color-text-muted);
   max-width: 62ch;
   font-size: var(--sp-text-lg);
+  line-height: 1.5;
 }
 
 .sp-hero-actions,
@@ -164,7 +177,6 @@
   margin-top: var(--sp-space-6);
 }
 
-.sp-selector button,
 .sp-faq-button {
   transition:
     transform var(--sp-transition),
@@ -183,7 +195,6 @@
 
 .sp-proof-card,
 .sp-floating-card,
-.sp-panel,
 .sp-benefit-card,
 .sp-step,
 .sp-audience-card,
@@ -213,6 +224,7 @@
 .sp-benefit-card p,
 .sp-faq-content {
   color: var(--sp-color-text-muted);
+  font-size: 0.98rem;
 }
 
 .sp-hero-visual {
@@ -240,11 +252,6 @@
 
 .sp-card-primary {
   min-height: 300px;
-}
-
-.sp-card-secondary {
-  width: min(82%, 360px);
-  justify-self: end;
 }
 
 .sp-hero-visual-title {
@@ -304,43 +311,10 @@
   color: var(--sp-color-text-muted);
 }
 
-.sp-selector {
-  display: inline-flex;
-  gap: var(--sp-space-2);
-  padding: var(--sp-space-2);
-  border-radius: var(--sp-radius-full);
-  border: 1px solid var(--sp-color-border);
-  background: var(--sp-color-surface);
-  margin-bottom: var(--sp-space-6);
-  flex-wrap: wrap;
-}
-
-.sp-selector button {
-  border: 0;
-  background: transparent;
-  min-height: 44px;
-  padding: 0.8rem 1rem;
-  border-radius: var(--sp-radius-full);
-  font-weight: 700;
-  color: var(--sp-color-text-muted);
-  cursor: pointer;
-}
-
-.sp-selector button.active {
-  background: var(--sp-color-primary);
-  color: var(--sp-color-text-inverse);
-  box-shadow: var(--sp-shadow-sm);
-}
-
-.sp-panel {
-  padding: clamp(1.25rem, 2vw, 2rem);
-}
-
 .sp-audience-layout,
 .sp-benefits-grid,
 .sp-steps-grid,
-.sp-metrics-grid,
-.sp-contact-grid {
+.sp-metrics-grid {
   display: grid;
   gap: var(--sp-space-4);
 }
@@ -359,11 +333,6 @@
 
 .sp-metrics-grid {
   grid-template-columns: repeat(4, minmax(0, 1fr));
-}
-
-.sp-contact-grid {
-  grid-template-columns: 1.1fr 0.9fr;
-  align-items: start;
 }
 
 .sp-audience-card,
@@ -446,11 +415,6 @@
   margin-bottom: var(--sp-space-6);
 }
 
-.sp-hidden {
-  display: none !important;
-}
-
-.sp-selector button:hover,
 .sp-faq-button:hover {
   transform: translateY(-1px);
 }
@@ -458,7 +422,6 @@
 @media (max-width: 1080px) {
   .sp-hero-grid,
   .sp-audience-layout,
-  .sp-contact-grid,
   .sp-benefits-grid,
   .sp-steps-grid,
   .sp-metrics-grid {
@@ -471,27 +434,78 @@
 }
 
 @media (max-width: 780px) {
+  .sp-page .sp-container {
+    width: min(calc(100% - 1.25rem), var(--sp-content));
+  }
+
+  .sp-page section {
+    padding: 2.5rem 0;
+  }
+
   .sp-hero-grid,
   .sp-audience-layout,
   .sp-benefits-grid,
   .sp-steps-grid,
   .sp-metrics-grid,
-  .sp-contact-grid,
   .sp-proof-bar {
     grid-template-columns: 1fr;
   }
 
+  .sp-page h1 {
+    font-size: clamp(1.65rem, 7vw, 2.15rem);
+    max-width: 14ch;
+    margin-top: var(--sp-space-4);
+  }
+
+  .sp-page h2 {
+    font-size: clamp(1.25rem, 5.8vw, 1.7rem);
+    max-width: 20ch;
+  }
+
+  .sp-page h3 {
+    font-size: clamp(1.06rem, 4.5vw, 1.2rem);
+  }
+
+  .sp-lead {
+    font-size: 1rem;
+    margin-top: var(--sp-space-4);
+  }
+
+  .sp-proof-card,
+  .sp-floating-card,
+  .sp-benefit-card,
+  .sp-step,
+  .sp-audience-card,
+  .sp-faq-item,
+  .sp-metric-tile {
+    border-radius: 1rem;
+  }
+
+  .sp-proof-card,
+  .sp-audience-card,
+  .sp-benefit-card,
+  .sp-step,
+  .sp-metric-tile,
+  .sp-floating-card {
+    padding: 1rem;
+  }
+
+  .sp-hero-actions {
+    gap: 0.65rem;
+    margin-top: 1rem;
+  }
+
   .sp-mini-actions {
     flex-direction: column;
+    gap: 0.65rem;
+    margin-top: 1rem;
   }
 
   .sp-section-head {
     align-items: start;
     flex-direction: column;
-  }
-
-  .sp-page h1 {
-    max-width: 12ch;
+    gap: 0.8rem;
+    margin-bottom: 1rem;
   }
 }
 
